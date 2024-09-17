@@ -56,5 +56,15 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Seeds" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\tblCategory.sql" />
+    <Build Include="Tables\tblIcon.sql" />
+    <Build Include="Tables\tblTransaction.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Seeds\PopuleteDatabase.Seeds.sql" />
   </ItemGroup>
 </Project>
