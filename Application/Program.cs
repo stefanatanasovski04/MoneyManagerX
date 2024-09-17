@@ -6,6 +6,7 @@ namespace SpendingTracker
     using Microsoft.Extensions.DependencyInjection;
     using MMX.Common;
     using MMX.Configurations;
+    using MMX.Infrastructure;
     using System.Reflection;
 
     public class Program
@@ -17,8 +18,8 @@ namespace SpendingTracker
             // Add services to the container.
             builder.Services.AddDbContext<BaseQueryDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            ////builder.Services.AddDbContext<TransactionsQueryDbContext>(options =>
-            ////    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<MmxQueryDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             ////Assembly[] mediatorHandlersFromAssemblies = new Assembly[]
             ////{
