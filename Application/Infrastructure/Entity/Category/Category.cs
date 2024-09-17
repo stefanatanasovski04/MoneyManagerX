@@ -1,8 +1,8 @@
 ﻿namespace MMX.Infrastructure.Entity.Category
 {
     using MMX.Common.Domain;
+    using MMX.Domain.Enum;
     using MMX.Infrastructure.Entity.Icon;
-    using MMX.Infrastructure.Enum;
 
     public class Category : BaseCreatedEntity
     {

@@ -4,6 +4,8 @@ namespace SpendingTracker
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using MMX.Application.Controllers;
+    using MMX.Application.Domain.Categories.List;
     using MMX.Common;
     using MMX.Configurations;
     using MMX.Infrastructure;
@@ -21,13 +23,13 @@ namespace SpendingTracker
             builder.Services.AddDbContext<MmxQueryDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            ////Assembly[] mediatorHandlersFromAssemblies = new Assembly[]
-            ////{
-            ////    typeof(PersonsListQuery).Assembly,
-            ////    typeof(PersonsController).Assembly
-            ////};
+            Assembly[] mediatorHandlersFromAssemblies = 
+            {
+                typeof(CategoriesListQuery).Assembly,
+                typeof(CategoryController).Assembly
+            };
 
-            ////MassTransitConfiguration.AddMediator(builder.Services, mediatorHandlersFromAssemblies);
+            MassTransitConfiguration.AddMediator(builder.Services, mediatorHandlersFromAssemblies);
 
             builder.Services.AddControllers();
             builder.Services.AddMvcCore();
