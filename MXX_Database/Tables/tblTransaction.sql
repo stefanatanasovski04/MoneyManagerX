@@ -6,7 +6,7 @@
     [CategoryFk]               INT                                            NOT NULL,
     [Name]                     VARCHAR(50)                                    NOT NULL,
     [Type]                     INT                                            NOT NULL,
-    [Note]                     VARCHAR(50)                                    NOT NULL,
+    [Note]                     VARCHAR(MAX)                                   NULL,
     [Amount]                   MONEY                                          NOT NULL,
     [SysStartTime]             DATETIME2 GENERATED ALWAYS AS ROW START        NOT NULL,
     [SysEndTime]               DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN   NOT NULL,
