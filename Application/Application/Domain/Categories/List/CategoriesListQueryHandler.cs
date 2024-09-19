@@ -1,7 +1,7 @@
 ﻿namespace MMX.Application.Domain.Categories.List
 {
     using Microsoft.EntityFrameworkCore;
-    using MMX.Application.Contracts.Responses;
+    using MMX.Application.Contracts.Responses.Categories;
     using MMX.Common.Contracts;
     using MMX.Common.Mediator.Handlers;
     using MMX.Infrastructure;
@@ -29,6 +29,7 @@
 
             persons.ForEach(x => personsListResponse.Add(new CategoriesListResponse
             {
+                Id = x.Id,
                 Name = x.Name,
                 Type = x.Type
             }));

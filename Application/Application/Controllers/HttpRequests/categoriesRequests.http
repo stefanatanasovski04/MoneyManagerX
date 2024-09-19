@@ -1,5 +1,35 @@
 @Application_HostAddress = http://localhost:5000
 
-###
+### Get category list
 GET {{Application_HostAddress}}/api/categories?type=expense
 Accept: application/json
+
+### Get category
+GET {{Application_HostAddress}}/api/categories/1
+Accept: application/json
+
+### Delete category
+DELETE {{Application_HostAddress}}/api/categories/2
+Accept: application/json
+
+### Add Category
+POST {{Application_HostAddress}}/api/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Name": "Salary",
+    "Type": 1,
+    "IconFk": 1
+}
+
+### Update Category
+PUT  {{Application_HostAddress}}/api/categories/8
+Accept: application/json
+Content-Type: application/json
+
+{
+    "Name": "Salary Edited",
+    "Type": 1,
+    "IconFk": 1
+}

@@ -1,4 +1,4 @@
-﻿namespace MMX.Application.Contracts.Requests
+﻿namespace MMX.Application.Contracts.Requests.Categories
 {
     using MMX.Domain.Enum;
 
