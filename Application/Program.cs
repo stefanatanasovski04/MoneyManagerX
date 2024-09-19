@@ -5,10 +5,16 @@ namespace SpendingTracker
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using MMX.Application.Controllers;
+    using MMX.Application.Domain.Categories.CreateCategory;
+    using MMX.Application.Domain.Categories.DeleteCateogry;
+    using MMX.Application.Domain.Categories.GetCategory;
     using MMX.Application.Domain.Categories.List;
+    using MMX.Application.Domain.Categories.UpdateCategory;
     using MMX.Common;
+    using MMX.Common.ExceptionHandler;
     using MMX.Configurations;
     using MMX.Infrastructure;
+    using MMX.Infrastructure.Repositories;
     using System.Reflection;
 
     public class Program
@@ -17,15 +23,31 @@ namespace SpendingTracker
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add db Context
             builder.Services.AddDbContext<BaseQueryDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<BaseCommandDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddDbContext<MmxQueryDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<MmxCommandDbContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add repositories
+            builder.Services.AddScoped<IMmxRepository, MmxRepository>();
 
             Assembly[] mediatorHandlersFromAssemblies = 
             {
+                // Queries
                 typeof(CategoriesListQuery).Assembly,
+                typeof(GetCategoryQuery).Assembly,
+
+                // Commands
+                typeof(CreateCategoryCommand).Assembly,
+                typeof(DeleteCategoryCommand).Assembly,
+                typeof(UpdateCategoryCommand).Assembly,
+
+                // Controllers
                 typeof(CategoryController).Assembly
             };
 
@@ -63,6 +85,7 @@ namespace SpendingTracker
             }
 
             app.UseCors("AllowAll");
+            app.UseMiddleware<MmxExceptionHandler>();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
