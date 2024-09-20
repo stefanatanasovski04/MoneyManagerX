@@ -1,4 +1,4 @@
-﻿namespace MMX.Common.Contracts.Dtos
+﻿namespace MMX.Common.Dtos
 {
     public class VoidResult
     {

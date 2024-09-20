@@ -36,22 +36,7 @@ namespace SpendingTracker
             // Add repositories
             builder.Services.AddScoped<IMmxRepository, MmxRepository>();
 
-            Assembly[] mediatorHandlersFromAssemblies = 
-            {
-                // Queries
-                typeof(CategoriesListQuery).Assembly,
-                typeof(GetCategoryQuery).Assembly,
-
-                // Commands
-                typeof(CreateCategoryCommand).Assembly,
-                typeof(DeleteCategoryCommand).Assembly,
-                typeof(UpdateCategoryCommand).Assembly,
-
-                // Controllers
-                typeof(CategoryController).Assembly
-            };
-
-            MassTransitConfiguration.AddMediator(builder.Services, mediatorHandlersFromAssemblies);
+            MassTransitConfiguration.AddMediator(builder.Services);
 
             builder.Services.AddControllers();
             builder.Services.AddMvcCore();
@@ -76,7 +61,7 @@ namespace SpendingTracker
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MoneyManager v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MoneyManagerX v1"));
             }
             else
             {

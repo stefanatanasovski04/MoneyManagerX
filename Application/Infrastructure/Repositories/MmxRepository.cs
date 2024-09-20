@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MMX.Infrastructure.Entity.Category;
-
-namespace MMX.Infrastructure.Repositories
+﻿namespace MMX.Infrastructure.Repositories
 {
+    using MMX.Infrastructure.Entity.Category;
+
     public class MmxRepository : IMmxRepository
     {
         private readonly MmxCommandDbContext dbContext;

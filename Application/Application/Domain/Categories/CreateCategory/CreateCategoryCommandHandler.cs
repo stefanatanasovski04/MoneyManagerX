@@ -1,6 +1,6 @@
 ﻿namespace MMX.Application.Domain.Categories.CreateCategory
 {
-    using MMX.Common.Contracts.Dtos;
+    using MMX.Common.Dtos;
     using MMX.Common.Mediator.Handlers;
     using MMX.Infrastructure.Entity.Category;
     using MMX.Infrastructure.Repositories;

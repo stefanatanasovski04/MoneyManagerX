@@ -1,11 +1,11 @@
 @Application_HostAddress = http://localhost:5000
 
 ### Get category list
-GET {{Application_HostAddress}}/api/categories?type=expense
+GET {{Application_HostAddress}}/api/categories?type=income&page=1&pageSize=3&orderBy=Name&order=asc
 Accept: application/json
 
 ### Get category
-GET {{Application_HostAddress}}/api/categories/1
+GET {{Application_HostAddress}}/api/categories/9
 Accept: application/json
 
 ### Delete category
@@ -18,13 +18,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "Name": "Salary",
+    "Name": "salary 80",
     "Type": 1,
     "IconFk": 1
 }
 
 ### Update Category
-PUT  {{Application_HostAddress}}/api/categories/8
+PUT  {{Application_HostAddress}}/api/categories/12
 Accept: application/json
 Content-Type: application/json
 
