@@ -20,7 +20,7 @@
 
         public override async Task<EnvelopeGeneric<List<CategoriesListResponse>>> Handle(CategoriesListQuery query)
         {
-            return Envelope.CreateOk(MapToResponse(await dbContext.Categories.ToListAsync()));
+            return Envelope.CreateOk(MapToResponse(await dbContext.Categories.Where(x => x.Type == query.Type).ToListAsync()));
         }
 
         private List<CategoriesListResponse> MapToResponse(List<Category> persons)
