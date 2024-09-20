@@ -3,13 +3,14 @@
     using Microsoft.EntityFrameworkCore;
     using MMX.Application.Contracts.Responses.Categories;
     using MMX.Common.Contracts;
+    using MMX.Common.Dtos;
     using MMX.Common.Mediator.Handlers;
     using MMX.Infrastructure;
     using MMX.Infrastructure.Entity.Category;
-    using System;
     using System.Threading.Tasks;
+    using MMX.Common.ValueObjects.SortingValue;
 
-    public class CategoriesListQueryHandler : QueryHandler<CategoriesListQuery, EnvelopeGeneric<List<CategoriesListResponse>>>
+    public class CategoriesListQueryHandler : QueryHandler<CategoriesListQuery, EnvelopeGeneric<ListResultDto<CategoriesListResponse>>>
     {
         private readonly MmxQueryDbContext dbContext;
 
@@ -18,23 +19,35 @@
             this.dbContext = dbContext;
         }
 
-        public override async Task<EnvelopeGeneric<List<CategoriesListResponse>>> Handle(CategoriesListQuery query)
+        public override async Task<EnvelopeGeneric<ListResultDto<CategoriesListResponse>>> Handle(CategoriesListQuery query)
         {
-            return Envelope.CreateOk(MapToResponse(await dbContext.Categories.Where(x => x.Type == query.Type).ToListAsync()));
+            IQueryable<Category> baseQuery = dbContext.Categories.Where(x => x.Type == query.Type);
+            IQueryable<Category> sortedCategories = baseQuery.ApplyOrder(query.Sorting, defaultSorting: category => category.Id);
+
+            int totalCategories = await baseQuery.CountAsync();
+
+            List<Category> dbResult = await sortedCategories.Skip(query.Paging.Skip).Take(query.Paging.Take).ToListAsync();
+
+            List<CategoriesListResponse> responseList = MapToResponse(dbResult);
+
+            return Envelope.CreateOk(
+                new ListResultDto<CategoriesListResponse>
+                {
+                    List = responseList,
+                    TotalCount = totalCategories,
+                    CurrentPage = query.Paging.Page,
+                    PageSize = query.Paging.PageSize
+                });
         }
 
-        private List<CategoriesListResponse> MapToResponse(List<Category> persons)
+        private List<CategoriesListResponse> MapToResponse(List<Category> dbResult)
         {
-            List<CategoriesListResponse> personsListResponse = new List<CategoriesListResponse>();
-
-            persons.ForEach(x => personsListResponse.Add(new CategoriesListResponse
+            return dbResult.ConvertAll(category => new CategoriesListResponse
             {
-                Id = x.Id,
-                Name = x.Name,
-                Type = x.Type
-            }));
-
-            return personsListResponse;
+                Id = category.Id,
+                Name = category.Name,
+                Type = category.Type
+            });
         }
     }
 }

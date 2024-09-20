@@ -5,7 +5,6 @@
     using MMX.Infrastructure.Entity.Category;
     using MMX.Infrastructure.Entity.Icon;
     using MMX.Infrastructure.Entity.Transaction;
-    using System;
 
     public class MmxQueryDbContext : BaseQueryDbContext
     {

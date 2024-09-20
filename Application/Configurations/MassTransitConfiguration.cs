@@ -12,11 +12,12 @@
             (type) => (type.BaseType?.Name?.Contains(nameof(CommandHandler<MmxCommand, object>)) ?? false) ||
                           (type.BaseType?.Name?.Contains(nameof(QueryHandler<MmxQuery, object>)) ?? false);
 
-        public static void AddMediator(this IServiceCollection services, Assembly[] mediatorHandlersFromAssembly)
+        public static void AddMediator(this IServiceCollection services)
         {
+            Assembly[] handlers = [];
             services.AddMediator(config =>
             {
-                config.AddConsumers(MediatorHandlersFilter, mediatorHandlersFromAssembly);
+                config.AddConsumers(MediatorHandlersFilter, handlers);
             });
 
             services.AddScoped<MmxMediator, MmxMediator>();

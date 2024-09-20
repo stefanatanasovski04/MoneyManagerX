@@ -11,8 +11,10 @@
     using MMX.Application.Domain.Categories.List;
     using MMX.Application.Domain.Categories.UpdateCategory;
     using MMX.Common.Contracts;
-    using MMX.Common.Contracts.Dtos;
+    using MMX.Common.Dtos;
     using MMX.Common.Mediator;
+    using MMX.Common.ValueObjects.PagingValue;
+    using MMX.Common.ValueObjects.SortingValue;
     using MMX.Domain.Enum;
     using Swashbuckle.AspNetCore.Annotations;
 
@@ -37,9 +39,16 @@
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
         [HttpGet("")]
-        public async Task<EnvelopeGeneric<List<CategoriesListResponse>>> GetCategories([FromQuery] CategoryType type)
+        public async Task<EnvelopeGeneric<ListResultDto<CategoriesListResponse>>> GetCategories(
+            [FromQuery] int? page,
+            [FromQuery] int? pageSize,
+            [FromQuery] string? order,
+            [FromQuery] string? orderBy,
+            [FromQuery] CategoryType type)
         {
-            return await queryReader.Get<CategoriesListQuery, EnvelopeGeneric<List<CategoriesListResponse>>>(new CategoriesListQuery(type));
+            Paging paging = RegularPaging.Create(page, pageSize);
+            Sorting sorting = Sorting.Create(orderBy, order);
+            return await queryReader.Get<CategoriesListQuery, EnvelopeGeneric<ListResultDto<CategoriesListResponse>>>(new CategoriesListQuery(type, paging, sorting));
         }
 
         [SwaggerOperation(Summary = "Retreve a single Category.", Description = "Returns: Single Cateogry.")]

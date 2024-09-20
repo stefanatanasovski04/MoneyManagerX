@@ -1,6 +1,6 @@
 ﻿namespace MMX.Application.Domain.Categories.DeleteCateogry
 {
-    using MMX.Common.Contracts.Dtos;
+    using MMX.Common.Dtos;
     using MMX.Common.Exceptions;
     using MMX.Common.Mediator.Handlers;
     using MMX.Infrastructure.Entity.Category;

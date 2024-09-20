@@ -1,11 +1,10 @@
-﻿using MassTransit.JobService.Components;
-using MMX.Common.Contracts;
-using MMX.Common.Exceptions;
-using Newtonsoft.Json;
-using System.Net;
-
-namespace MMX.Common.ExceptionHandler
+﻿namespace MMX.Common.ExceptionHandler
 {
+    using MMX.Common.Contracts;
+    using MMX.Common.Exceptions;
+    using Newtonsoft.Json;
+    using System.Net;
+
     public class MmxExceptionHandler
     {
         private readonly RequestDelegate next;
