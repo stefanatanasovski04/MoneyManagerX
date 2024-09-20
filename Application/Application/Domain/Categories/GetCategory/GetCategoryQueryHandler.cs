@@ -24,7 +24,7 @@
             Category category =  await dbContext.Categories
                 .Where(x => x.Id == query.Id)
                 .Include(x => x.Icon)
-                .FirstAsync()
+                .FirstOrDefaultAsync()
                 ?? throw new MmxNotFoundException($"Category with Id = {query.Id} was not found.");
 
             return Envelope.CreateOk(MapToCategoryReposne(category));
