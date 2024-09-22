@@ -8,6 +8,8 @@
     [Type]                     INT                                            NOT NULL,
     [Note]                     VARCHAR(MAX)                                   NULL,
     [Amount]                   MONEY                                          NOT NULL,
+    [TransactionDate]          DATE                                           NOT NULL,
+    [TransactionTime]          TIME                                           NOT NULL,
     [SysStartTime]             DATETIME2 GENERATED ALWAYS AS ROW START        NOT NULL,
     [SysEndTime]               DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN   NOT NULL,
     PERIOD FOR SYSTEM_TIME ([SysStartTime],[SysEndTime]),
