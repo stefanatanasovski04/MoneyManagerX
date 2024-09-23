@@ -6,7 +6,6 @@
     [CategoryFk]               INT                                            NOT NULL,
     [Name]                     VARCHAR(50)                                    NOT NULL,
     [Type]                     INT                                            NOT NULL,
-    [Note]                     VARCHAR(MAX)                                   NULL,
     [Amount]                   MONEY                                          NOT NULL,
     [TransactionDate]          DATE                                           NOT NULL,
     [TransactionTime]          TIME                                           NOT NULL,

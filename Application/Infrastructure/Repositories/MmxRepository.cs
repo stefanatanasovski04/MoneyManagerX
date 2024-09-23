@@ -1,6 +1,7 @@
 ﻿namespace MMX.Infrastructure.Repositories
 {
     using MMX.Infrastructure.Entity.Category;
+    using MMX.Infrastructure.Entity.Transaction;
 
     public class MmxRepository : IMmxRepository
     {
@@ -24,6 +25,16 @@
         public void CreateCategory(Category category)
         {
             dbContext.Categories.Add(category);
+        }
+
+        public async Task<Transaction?> GetTransactionById(int id)
+        {
+            return await dbContext.Transactions.FindAsync(id);
+        }
+
+        public void CreateTransaction(Transaction transaction)
+        {
+            dbContext.Transactions.Add(transaction);
         }
     }
 }

@@ -65,6 +65,6 @@
     <Build Include="Tables\tblTransaction.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Seeds\PopuleteDatabase.Seeds.sql" />
+    <None Include="Seeds\PopuleteDatabase.Seeds.sql" />
   </ItemGroup>
 </Project>

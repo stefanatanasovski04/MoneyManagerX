@@ -22,10 +22,11 @@
             builder.Property(x => x.DeletedOn).HasColumnName("DeletedOn").HasColumnType("smalldatetime").IsRequired(false);
 
             // Entity Properties
-            builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(50)").IsRequired();
+            builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(50)").IsRequired(false);
             builder.Property(x => x.Type).HasColumnName("Type").HasColumnType("int").IsRequired();
-            builder.Property(x => x.Note).HasColumnName("Note").HasColumnType("varchar(MAX)").IsRequired(false);
             builder.Property(x => x.Amount).HasColumnName("Amount").HasColumnType("money").IsRequired();
+            builder.Property(x => x.TransactionDate).HasColumnName("TransactionDate").HasColumnType("date").IsRequired();
+            builder.Property(x => x.TransactionTime).HasColumnName("TransactionTime").HasColumnType("time").IsRequired();
             builder.Property(x => x.CategoryFk).HasColumnName("CategoryFk").HasColumnType("int").IsRequired();
 
             builder

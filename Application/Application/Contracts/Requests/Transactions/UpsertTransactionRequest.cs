@@ -1,10 +1,8 @@
-﻿namespace MMX.Infrastructure.Entity.Transaction
+﻿namespace MMX.Application.Contracts.Requests.Transactions
 {
-    using MMX.Common.Domain;
     using MMX.Domain.Enum;
-    using MMX.Infrastructure.Entity.Category;
 
-    public class Transaction : BaseCreatedEntity
+    public class UpsertTransactionRequest
     {
         public string? Name { get; set; }
 
@@ -17,7 +15,5 @@
         public DateOnly TransactionDate { get; set; }
 
         public TimeOnly TransactionTime { get; set; }
-
-        public virtual Category? Category { get; set; }
     }
 }
