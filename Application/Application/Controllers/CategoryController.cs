@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Mvc;
     using MMX.Application.Contracts.Requests;
     using MMX.Application.Contracts.Requests.Categories;
-    using MMX.Application.Contracts.Responses.Categories;
     using MMX.Application.Domain.Categories.CreateCategory;
     using MMX.Application.Domain.Categories.DeleteCateogry;
     using MMX.Application.Domain.Categories.GetCategory;
@@ -39,7 +38,7 @@
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
         [HttpGet("")]
-        public async Task<EnvelopeGeneric<ListResultDto<CategoriesListResponse>>> GetCategories(
+        public async Task<EnvelopeGeneric<ListResultDto<CategoryResponse>>> GetCategories(
             [FromQuery] int? page,
             [FromQuery] int? pageSize,
             [FromQuery] string? order,
@@ -48,7 +47,7 @@
         {
             Paging paging = RegularPaging.Create(page, pageSize);
             Sorting sorting = Sorting.Create(orderBy, order);
-            return await queryReader.Get<CategoriesListQuery, EnvelopeGeneric<ListResultDto<CategoriesListResponse>>>(new CategoriesListQuery(type, paging, sorting));
+            return await queryReader.Get<CategoriesListQuery, EnvelopeGeneric<ListResultDto<CategoryResponse>>>(new CategoriesListQuery(type, paging, sorting));
         }
 
         [SwaggerOperation(Summary = "Retreve a single Category.", Description = "Returns: Single Cateogry.")]
