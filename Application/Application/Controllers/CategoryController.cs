@@ -4,11 +4,14 @@
     using Microsoft.AspNetCore.Mvc;
     using MMX.Application.Contracts.Requests;
     using MMX.Application.Contracts.Requests.Categories;
+    using MMX.Application.Contracts.Responses.Transactions;
     using MMX.Application.Domain.Categories.CreateCategory;
     using MMX.Application.Domain.Categories.DeleteCateogry;
     using MMX.Application.Domain.Categories.GetCategory;
     using MMX.Application.Domain.Categories.List;
+    using MMX.Application.Domain.Categories.TransactionsByCategory;
     using MMX.Application.Domain.Categories.UpdateCategory;
+    using MMX.Application.Domain.Transactions.List;
     using MMX.Common.Contracts;
     using MMX.Common.Dtos;
     using MMX.Common.Mediator;
@@ -93,6 +96,20 @@
         {
             return await commandExecutor.Execute<UpdateCategoryCommand, VoidResult>(
                 new UpdateCategoryCommand(id, request.Name, request.Type, request.IconFk));
+        }
+
+        [SwaggerOperation(Summary = "Transactions by category.", Description = "Transactions by category.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "List retrieved successfully.")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
+        [HttpGet("{id:int}/transactions")]
+        public async Task<EnvelopeGeneric<TransactionsByCategoryResponse>> GetTransactionsByCategory(
+            [FromRoute] int id,
+            [FromQuery] DateOnly month,
+            [FromQuery] bool yearly)
+        {
+            return await queryReader.Get<GetTransactionsByCategoryQuery, EnvelopeGeneric<TransactionsByCategoryResponse>>(new GetTransactionsByCategoryQuery(id, month, yearly));
         }
     }
 }

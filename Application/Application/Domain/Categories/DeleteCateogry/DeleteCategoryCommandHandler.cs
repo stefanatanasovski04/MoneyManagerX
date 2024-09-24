@@ -4,6 +4,7 @@
     using MMX.Common.Exceptions;
     using MMX.Common.Mediator.Handlers;
     using MMX.Infrastructure.Entity.Category;
+    using MMX.Infrastructure.Entity.Transaction;
     using MMX.Infrastructure.Repositories;
     using System.Threading.Tasks;
 
@@ -20,6 +21,10 @@
         {
             Category category = await repository.GetCategoryById(command.Id)
                 ?? throw new MmxNotFoundException($"Category with Id = {command.Id} was not found.");
+
+            List<Transaction> transactions = await repository.GetTransactionsByCategoryId(category.Id);
+
+            transactions.ForEach(x => x.DeletedOn = DateTime.Now);  
 
             category.DeletedOn = DateTime.Now;
 

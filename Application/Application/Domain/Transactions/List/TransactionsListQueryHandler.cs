@@ -22,7 +22,10 @@
 
         public override async Task<EnvelopeGeneric<ListResultDto<TransactionResponse>>> Handle(TransactionsListQuery query)
         {
-            IQueryable<Transaction> baseQuery = dbContext.Transactions.Include(x => x.Category).ThenInclude(x => x!.Icon);
+            IQueryable<Transaction> baseQuery = query.Yearly
+                ? dbContext.Transactions.Where(x => x.TransactionDate.Year == query.Month.Year).Include(x => x.Category).ThenInclude(x => x!.Icon)
+                : dbContext.Transactions.Where(x => x.TransactionDate.Month == query.Month.Month).Include(x => x.Category).ThenInclude(x => x!.Icon);
+
             IQueryable<Transaction> sortedTransactions = baseQuery.ApplyOrder(query.Sorting, defaultSorting: category => category.Id);
 
             int totalTransactions = await baseQuery.CountAsync();

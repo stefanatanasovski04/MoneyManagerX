@@ -15,5 +15,7 @@
 
         void CreateTransaction(Transaction transaction);
 
+        Task<List<Transaction>> GetTransactionsByCategoryId(int categoryId);
+
     }
 }

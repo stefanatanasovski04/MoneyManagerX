@@ -6,14 +6,20 @@
 
     public class TransactionsListQuery : MmxQuery
     {
-        public TransactionsListQuery(Paging paging, Sorting sorting)
+        public TransactionsListQuery(Paging paging, Sorting sorting, DateOnly month, bool yearly)
         {
             Paging = paging;
             Sorting = sorting;
+            Month = month;
+            Yearly = yearly;
         }
 
         public Paging Paging { get; private set; }
 
         public Sorting Sorting { get; private set; }
+
+        public DateOnly Month { get; private set; }
+
+        public bool Yearly { get; private set; }
     }
 }
