@@ -1,35 +1,50 @@
 ﻿@Application_HostAddress = http://localhost:5000/api/transactions
+@type=expense
 
-### Get category list
-GET {{Application_HostAddress}}?type=income&page=1&pageSize=3&orderBy=Name&order=asc
+### Get transactions list
+GET {{Application_HostAddress}}?&page=1&pageSize=20&orderBy=Id&order=desc&month=2024-09-22
 Accept: application/json
 
-### Get category
-GET {{Application_HostAddress}}/9
+### Get transaction
+GET {{Application_HostAddress}}/1
 Accept: application/json
 
-### Delete category
-DELETE {{Application_HostAddress}}/2
+### Delete transaction
+DELETE {{Application_HostAddress}}/3
 Accept: application/json
 
-### Add Category
+### Add Transaction
 POST {{Application_HostAddress}}
 Accept: application/json
 Content-Type: application/json
 
 {
-    "Name": "salary 80",
+    "Name": "Plata stizhe",
     "Type": 1,
-    "IconFk": 1
+    "Amount": 100,
+    "TransactionDate": "2024-09-22",
+    "TransactionTime": "20:30:06",
+    "CategoryFk": 2
 }
 
-### Update Category
-PUT  {{Application_HostAddress}}/12
+### Update Transaction
+PUT  {{Application_HostAddress}}/4
 Accept: application/json
 Content-Type: application/json
 
 {
-    "Name": "Salary Edited",
-    "Type": 1,
-    "IconFk": 1
+    "Name": "Played Ping Pong",
+    "Type": 0,
+    "Amount": 900,
+    "TransactionDate": "2024-09-22",
+    "TransactionTime": "21:30:06",
+    "CategoryFk": 1
 }
+
+### Get income
+GET {{Application_HostAddress}}/income?date=2024-09-22
+Accept: application/json
+
+### Get expense
+GET {{Application_HostAddress}}/expense?date=2024-09-22
+Accept: application/json

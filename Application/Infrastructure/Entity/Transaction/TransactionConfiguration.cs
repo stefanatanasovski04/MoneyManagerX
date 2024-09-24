@@ -31,7 +31,7 @@
 
             builder
                 .HasOne(x => x.Category)
-                .WithMany()
+                .WithMany(x => x.Transactions)
                 .HasForeignKey(x => x.CategoryFk)
                 .OnDelete(DeleteBehavior.Restrict);
         }

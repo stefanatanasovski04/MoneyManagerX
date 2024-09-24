@@ -15,6 +15,8 @@
     using MMX.Application.Contracts.Requests.Transactions;
     using MMX.Application.Domain.Transactions.CreateTransaction;
     using MMX.Application.Domain.Transactions.UpdateTransaction;
+    using MMX.Application.Domain.Transactions.TotalIncomeExpense;
+    using MMX.Domain.Enum;
 
     [ApiController]
     [Route("api/transactions")]
@@ -41,11 +43,13 @@
             [FromQuery] int? page,
             [FromQuery] int? pageSize,
             [FromQuery] string? order,
-            [FromQuery] string? orderBy)
+            [FromQuery] string? orderBy,
+            [FromQuery] DateOnly month,
+            [FromQuery] bool yearly)
         {
             Paging paging = RegularPaging.Create(page, pageSize);
             Sorting sorting = Sorting.Create(orderBy, order);
-            return await queryReader.Get<TransactionsListQuery, EnvelopeGeneric<ListResultDto<TransactionResponse>>>(new TransactionsListQuery(paging, sorting));
+            return await queryReader.Get<TransactionsListQuery, EnvelopeGeneric<ListResultDto<TransactionResponse>>>(new TransactionsListQuery(paging, sorting, month, yearly));
         }
 
         [SwaggerOperation(Summary = "Retreve a single Transaction.", Description = "Returns: Transaction Cateogry.")]
@@ -105,6 +109,28 @@
                     request.Amount,
                     request.TransactionDate,
                     request.TransactionTime));
+        }
+
+        [SwaggerOperation(Summary = "Calculate total income", Description = "Returns: Total income.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Income retrieved successfully.")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
+        [HttpGet("income")]
+        public async Task<EnvelopeGeneric<TypeResult<decimal>>> GetTotalIncome([FromQuery] DateOnly date, [FromQuery] bool yearly)
+        {
+            return await queryReader.Get<CalculateTotalIncomeExpenseQuery, EnvelopeGeneric<TypeResult<decimal>>>(new CalculateTotalIncomeExpenseQuery(TransactionType.Income, date, yearly));
+        }
+
+        [SwaggerOperation(Summary = "Calculate total expense", Description = "Returns: Total expense.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Expense retrieved successfully.")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
+        [HttpGet("expense")]
+        public async Task<EnvelopeGeneric<TypeResult<decimal>>> GetTotalExpense([FromQuery] DateOnly date, [FromQuery] bool yearly)
+        {
+            return await queryReader.Get<CalculateTotalIncomeExpenseQuery, EnvelopeGeneric<TypeResult<decimal>>>(new CalculateTotalIncomeExpenseQuery(TransactionType.Expense, date, yearly));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace MMX.Infrastructure.Repositories
 {
+    using Microsoft.EntityFrameworkCore;
     using MMX.Infrastructure.Entity.Category;
     using MMX.Infrastructure.Entity.Transaction;
 
@@ -35,6 +36,11 @@
         public void CreateTransaction(Transaction transaction)
         {
             dbContext.Transactions.Add(transaction);
+        }
+
+        public async Task<List<Transaction>> GetTransactionsByCategoryId(int categoryId)
+        {
+            return await dbContext.Transactions.Where(x => x.CategoryFk == categoryId).ToListAsync(); 
         }
     }
 }

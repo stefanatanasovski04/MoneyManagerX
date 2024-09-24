@@ -4,7 +4,7 @@
     [CreatedOn]                SMALLDATETIME                                  NOT NULL,
     [DeletedOn]                SMALLDATETIME                                  NULL,
     [CategoryFk]               INT                                            NOT NULL,
-    [Name]                     VARCHAR(50)                                    NOT NULL,
+    [Name]                     VARCHAR(50)                                    NULL,
     [Type]                     INT                                            NOT NULL,
     [Amount]                   MONEY                                          NOT NULL,
     [TransactionDate]          DATE                                           NOT NULL,
