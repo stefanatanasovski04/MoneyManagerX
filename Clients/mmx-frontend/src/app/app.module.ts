@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CategoriesModule } from './feature/categories/categories.module';
 import { TransactionsModule } from './feature/transactions/transactions.module';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     CategoriesModule,
     TransactionsModule,
     HttpClientModule,
+    NgbModule,
     RouterModule.forRoot([
       {path:'', redirectTo:'categories',pathMatch:'full'},
       {path:'**', redirectTo:'categories', pathMatch:'full'}
