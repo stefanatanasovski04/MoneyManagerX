@@ -1,0 +1,18 @@
+.navbar{
+    background: rgb(0, 0, 0);
+    font-family: 'Times New Roman', serif;
+}
+.navbar-text,
+.nav-link{
+    font-size: 145%;
+    color: rgb(236, 228, 217);
+}
+.navbar-brand{
+    font-size: 175%;
+    padding: 9px;
+    border: 3px solid black;
+    border-radius: 25px;
+    background-color: rgb(236, 228, 217);
+    color: rgb(3, 3, 3);
+    color: radial-gradient(circle, rgba(219,116,112,1) 0%, rgba(68,146,162,1) 0%, rgba(145,124,124,1) 99%); 
+}

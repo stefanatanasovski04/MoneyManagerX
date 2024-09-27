@@ -1,4 +1,41 @@
-<p>category-list works!</p>
+<div class="row mt-2">
+    <div class="heading-wrapper col-6">
+      <h2 class="heading-text">Categories</h2>
+    </div>
+  
+    <div class="add-btn-wrapper col-6">
+      <a class="btn btn-success btn-lg" [routerLink]="['/categories','add']">Add new Category</a>
+    </div>
+  </div>
+  <div class="error-message" *ngIf="!!error">
+    <app-error
+        [errorMessage]="errorMessage || null"
+        [error]="error"
+        [displayHeader]="false">
+    </app-error>
+    </div>
+  
+  <ul class="category-list">
+    <li *ngFor="let category of categories" class="mt-2">
+      <div class="card-holder col-12">
+        <div class="row g-0 list-row">
+          <div class="col-lg-2 mb-2 mt-2">
+            <!-- <img [src]="category.icon?.iconUrl" class="thumbnail-list" alt="..."> -->
+          </div>
+          <div class="col-lg-7 title-wrapper">
+            <h5 class="card-title">{{category.name}}</h5>
+          </div>
+          <div class="col-lg-2  dugme mt-4 mb-2">
+            <a [routerLink]="['/categories',category.id,'edit']" class="btn btn-outline-secondary btn-wrapper btn-lg"
+              style="width: 96px; height: 48px;"><i>Edit</i></a>
+            <a (click)="deleteCategory(category.id)" class="btn btn-danger btn-wrapper btn-lg"
+              style="width: 90px; height: 48px; margin-left: 5px;">Delete</a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
 
-
-<button (click)="getCategories()">GetCategories</button>
+  <div *ngIf="categories.length === 0">
+    No categories available.
+  </div>

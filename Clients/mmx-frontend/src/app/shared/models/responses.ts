@@ -1,9 +1,13 @@
 import { CategoryType } from "./enums";
-import { IIcon } from "./icon";
 
-export interface ICategories{
+export interface ICategory{
     id: number,
     name: string,
     type: CategoryType,
     icon: IIcon
+}
+
+export interface IIcon{
+    id: 1,
+    photo: any
 }

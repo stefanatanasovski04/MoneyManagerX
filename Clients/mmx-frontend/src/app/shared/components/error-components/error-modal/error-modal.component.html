@@ -1,0 +1,25 @@
+<div class="modal-content">
+    <div class="modal-header modal-flex-baseline">
+        <h2 class="modal-title">{{ 'Error_Modal_Header_Text'}}</h2>
+
+        <button
+            type="button"
+            class="close modal-close-button"
+            (click)="bsModalRef.hide()"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body text-center">
+        <app-error [error]="error"
+                    [errorMessage]="errorMessage"
+                    [displayHeader]="displayHeader"
+                    [iconSize]="IconSize.x3"></app-error>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button"  class="btn-close" aria-label="Close" (click)="bsModalRef.hide()"></button>
+    </div>
+</div>
