@@ -1,0 +1,8 @@
+<div class="alert alert-danger text-center">
+    <i class="fa fa-exclamation-triangle" [ngClass]="'fa-' + iconSize"></i>
+    <ng-template #showHeader>
+      <h2>{{ errorStatusText }}</h2>
+      <p>{{ getErrorMessage() }}</p>
+    </ng-template>
+    <h3 *ngIf="!displayHeader; else showHeader">{{ getErrorMessage() }}</h3>
+ </div>
