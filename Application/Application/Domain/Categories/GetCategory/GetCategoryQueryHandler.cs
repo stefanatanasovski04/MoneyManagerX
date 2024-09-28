@@ -40,7 +40,7 @@
                 Icon = new IconDto
                 {
                     Id = category.Icon!.Id,
-                    Photo = category.Icon.Photo
+                    PhotoUrl = category.Icon.PhotoUrl
                 }
             };
         }

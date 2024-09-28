@@ -1,7 +1,7 @@
 @Application_HostAddress = http://localhost:5000
 
 ### Get category list
-GET {{Application_HostAddress}}/api/categories?type=income&page=1&pageSize=3&orderBy=Name&order=asc
+GET {{Application_HostAddress}}/api/categories?page=1&pageSize=3&orderBy=Name&order=asc
 Accept: application/json
 
 ### Get category
@@ -18,7 +18,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "Name": "salary 80",
+    "Name": "Ostanato7",
     "Type": 1,
     "IconFk": 1
 }
@@ -33,3 +33,7 @@ Content-Type: application/json
     "Type": 1,
     "IconFk": 1
 }
+
+### Get Icons List
+GET  {{Application_HostAddress}}/api/categories/icons
+Accept: application/json

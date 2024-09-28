@@ -11,9 +11,9 @@
 
         public Sorting Sorting { get; private set; }
 
-        public CategoryType Type { get; private set; }
+        public CategoryType? Type { get; private set; }
 
-        public CategoriesListQuery(CategoryType type, Paging paging, Sorting sorting)
+        public CategoriesListQuery(CategoryType? type, Paging paging, Sorting sorting)
         {
             Type = type;
             Paging = paging;

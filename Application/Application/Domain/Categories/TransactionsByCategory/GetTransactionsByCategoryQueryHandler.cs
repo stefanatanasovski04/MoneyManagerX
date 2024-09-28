@@ -42,7 +42,7 @@
                 Id = category.Id,
                 Name = category.Name,
                 Type = category.Type,
-                Photo = category.Icon!.Photo
+                PhotoUrl = category.Icon!.PhotoUrl
             };
 
             foreach (Transaction transaction in transactions)

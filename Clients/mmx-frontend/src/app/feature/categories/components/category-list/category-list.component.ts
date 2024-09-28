@@ -9,11 +9,10 @@ import { HttpErrorResponse } from '@angular/common/http';
     templateUrl: './category-list.component.html',
     styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit, OnDestroy {
+export class CategoryListComponent implements OnInit {
     constructor (private categoryService: CategoryService) {}
 
     public categories: ICategory[] = [];
-    sub!: Subscription;
 
     public errorMessage = '';
     public error?: HttpErrorResponse;
@@ -47,11 +46,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             error: err => {
                 this.error = err;
                 this.errorMessage = err.errorMessage;
-                }
+            }
         });
     }
 
-    ngOnDestroy(): void {
-        this.sub.unsubscribe();
+    filterCategories(type: number) {
+        this.categories.filter(x => x.type == type);
     }
 }

@@ -4,8 +4,6 @@
 
     public class Icon : BaseCreatedEntity
     {
-        public string Name { get; set; } = string.Empty;
-
-        public byte[] Photo { get; set; } = Array.Empty<byte>();
+        public string PhotoUrl { get; set; } = string.Empty;
     }
 }
