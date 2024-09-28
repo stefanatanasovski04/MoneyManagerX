@@ -8,6 +8,6 @@ export interface ICategory{
 }
 
 export interface IIcon{
-    id: 1,
-    photo: any
+    id: number,
+    photoUrl: any
 }

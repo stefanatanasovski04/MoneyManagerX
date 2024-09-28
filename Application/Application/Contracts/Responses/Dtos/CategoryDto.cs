@@ -10,6 +10,6 @@
 
         public CategoryType Type { get; set; }
 
-        public byte[] Photo { get; set; } = Array.Empty<byte>();
+        public string PhotoUrl { get; set; } = string.Empty;
     }
 }

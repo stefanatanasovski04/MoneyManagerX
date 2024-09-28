@@ -22,7 +22,10 @@
 
         public override async Task<EnvelopeGeneric<ListResultDto<CategoryResponse>>> Handle(CategoriesListQuery query)
         {
-            IQueryable<Category> baseQuery = dbContext.Categories.Include(x => x.Icon).Where(x => x.Type == query.Type);
+            IQueryable<Category> baseQuery = query.Type != null
+                ? dbContext.Categories.Include(x => x.Icon).Where(x => x.Type == query.Type)
+                : dbContext.Categories.Include(x => x.Icon);
+
             IQueryable<Category> sortedCategories = baseQuery.ApplyOrder(query.Sorting, defaultSorting: category => category.Id);
 
             int totalCategories = await baseQuery.CountAsync();
@@ -51,7 +54,7 @@
                 Icon = new IconDto
                 {
                     Id = category.IconFk,
-                    Photo = category.Icon!.Photo
+                    PhotoUrl = category.Icon!.PhotoUrl
                 }         
             });
         }

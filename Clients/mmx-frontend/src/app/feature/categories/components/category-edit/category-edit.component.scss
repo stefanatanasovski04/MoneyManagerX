@@ -1,0 +1,39 @@
+.icon-img-select{
+    width: 60px;
+    height: 60px;
+  }
+  .sel-option{
+    width: 100px;
+    height: 50px;
+  }
+  /* HIDE RADIO */
+  [type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* IMAGE STYLES */
+  [type=radio] + img {
+  cursor: pointer;
+  }
+  
+  /* CHECKED STYLES */
+  [type=radio]:checked + img {
+    border: 2px solid rgb(58, 56, 56);
+    background-color: rgb(134, 134, 134);
+    border-radius: 10px;
+  }
+  .card-holder {
+   margin-top: 50px;
+    padding: 30px;
+    border: 2px solid #616d67;
+    border-radius: 25px;
+    background-color: rgb(236, 228, 217);
+    font-family: 'Times New Roman', serif;
+    font-size: 200%;
+  }
+  .form-control{
+    font-size:80%;
+  }

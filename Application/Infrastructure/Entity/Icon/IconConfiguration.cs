@@ -22,8 +22,7 @@
             builder.Property(x => x.DeletedOn).HasColumnName("DeletedOn").HasColumnType("smalldatetime").IsRequired(false);
 
             // Entity Properties
-            builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(50)").IsRequired();
-            builder.Property(x => x.Photo).HasColumnName("Photo").HasColumnType("image").IsRequired(false); // make this NOT NULL
+            builder.Property(x => x.PhotoUrl).HasColumnName("PhotoUrl").HasColumnType("nvarchar(100)").IsRequired(); 
         }
     }
 }

@@ -59,7 +59,7 @@
                     Id = transaction.CategoryFk,
                     Name = transaction.Category!.Name,
                     Type = transaction.Category.Type,
-                    Photo = transaction.Category!.Icon!.Photo
+                    PhotoUrl = transaction.Category!.Icon!.PhotoUrl
                 }
             });
         }

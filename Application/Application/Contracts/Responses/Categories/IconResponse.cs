@@ -1,6 +1,6 @@
-﻿namespace MMX.Application.Contracts.Responses.Dtos
+﻿namespace MMX.Application.Contracts.Responses.Categories
 {
-    public class IconDto
+    public class IconResponse
     {
         public int Id { get; set; }
 

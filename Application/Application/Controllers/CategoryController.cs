@@ -4,10 +4,12 @@
     using Microsoft.AspNetCore.Mvc;
     using MMX.Application.Contracts.Requests;
     using MMX.Application.Contracts.Requests.Categories;
+    using MMX.Application.Contracts.Responses.Categories;
     using MMX.Application.Contracts.Responses.Transactions;
     using MMX.Application.Domain.Categories.CreateCategory;
     using MMX.Application.Domain.Categories.DeleteCateogry;
     using MMX.Application.Domain.Categories.GetCategory;
+    using MMX.Application.Domain.Categories.IconsList;
     using MMX.Application.Domain.Categories.List;
     using MMX.Application.Domain.Categories.TransactionsByCategory;
     using MMX.Application.Domain.Categories.UpdateCategory;
@@ -46,7 +48,7 @@
             [FromQuery] int? pageSize,
             [FromQuery] string? order,
             [FromQuery] string? orderBy,
-            [FromQuery] CategoryType type)
+            [FromQuery] CategoryType? type)
         {
             Paging paging = RegularPaging.Create(page, pageSize);
             Sorting sorting = Sorting.Create(orderBy, order);
@@ -110,6 +112,17 @@
             [FromQuery] bool yearly)
         {
             return await queryReader.Get<GetTransactionsByCategoryQuery, EnvelopeGeneric<TransactionsByCategoryResponse>>(new GetTransactionsByCategoryQuery(id, month, yearly));
+        }
+
+        [SwaggerOperation(Summary = "All Icons.", Description = "All Icons")]
+        [SwaggerResponse(StatusCodes.Status200OK, "List retrieved successfully.")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
+        [HttpGet("icons")]
+        public async Task<EnvelopeGeneric<List<IconResponse>>> GetIcons()
+        {
+            return await queryReader.Get<GetIconsListQuery, EnvelopeGeneric<List<IconResponse>>>(new GetIconsListQuery());
         }
     }
 }
