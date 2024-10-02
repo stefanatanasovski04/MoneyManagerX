@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { Time } from '@angular/common';
+import { TransactionType } from 'src/app/shared/models/enums';
 
 @Component({
     selector: 'app-transaction-add',
@@ -17,6 +18,7 @@ export class TransactionAddComponent implements OnInit{
     pageTitle: string = 'Add Transaction';
     categories!: ICategory[];
     transactionForm!: FormGroup;
+    TransactionType = TransactionType;
 
     public error?: HttpErrorResponse;
     public errorMessage = '';
@@ -60,15 +62,13 @@ export class TransactionAddComponent implements OnInit{
                 amount: Number(this.transactionForm.value.transactionAmount),
             }
 
-            console.log(request);
-
             this.transactionService.createTransaction(request).subscribe({
+                next: () => this.onSaveComplete(),
                 error: error =>{
                     this.error = error;
                     this.errorMessage = error.errorMessage;
                 }
             });
-          // this.onSaveComplete();
         }
     }
 

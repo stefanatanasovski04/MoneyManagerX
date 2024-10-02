@@ -14,19 +14,32 @@ export class TransactionService {
     constructor(private http: HttpClient) {}
 
     getTransactionsList(yearly: boolean, month: string) {
-      return this.http.get<IEnvelope<IListResult<ITransaction>>>(`${this.baseUrl}/transactions?yearly=${yearly}&month=${month}`)
-          .pipe(
-              map(response => response.result),
-              catchError(error => throwError(error))
-          );
+        return this.http.get<IEnvelope<IListResult<ITransaction>>>(`${this.baseUrl}/transactions?yearly=${yearly}&month=${month}`)
+            .pipe(
+                map(response => response.result),
+                catchError(error => throwError(error))
+            );
+    }
+
+    getTransactionById(id: number) {
+        return this.http.get<IEnvelope<ITransaction>>(`${this.baseUrl}/transactions/${id}`)
+            .pipe(
+                map(response => response.result),
+                catchError(error => throwError(error))
+            );
     }
 
     createTransaction(request: IAddTransactionRequest) {
         return this.http.post<IEnvelope<void>>(`${this.baseUrl}/transactions`, request)
-          .pipe(
-              catchError(error => throwError(error))
-          )
+            .pipe(
+                catchError(error => throwError(error))
+            )
     }
 
-
+    updateTransaction(request: IAddTransactionRequest, id:number) {
+        return this.http.put<IEnvelope<void>>(`${this.baseUrl}/transactions/${id}`, request)
+            .pipe(
+                catchError(error => throwError(error))
+            )
+    }
 }

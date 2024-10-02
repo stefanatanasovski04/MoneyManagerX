@@ -3,6 +3,7 @@ import { CategoryAddComponent } from "src/app/feature/categories/components/cate
 import { CategoryEditComponent } from "src/app/feature/categories/components/category-edit/category-edit.component";
 import { CategoryListComponent } from "src/app/feature/categories/components/category-list/category-list.component";
 import { TransactionAddComponent } from "src/app/feature/transactions/components/transaction-add/transaction-add.component";
+import { TransactionEditComponent } from "src/app/feature/transactions/components/transaction-edit/transaction-edit.component";
 import { TransactionListComponent } from "src/app/feature/transactions/components/transaction-list/transaction-list.component";
 
 export const DEFAULT_ROUTES: Routes = [
@@ -19,5 +20,5 @@ export const CATEGORY_ROUTES: Routes = [
 export const TRANSACTION_ROUTES: Routes = [
     {path:'transactions', component:TransactionListComponent},
     {path:'transactions/add', component:TransactionAddComponent},
-    // {path:'transactions/:id/edit', component:},
+    {path:'transactions/:id/edit', component:TransactionEditComponent},
 ]

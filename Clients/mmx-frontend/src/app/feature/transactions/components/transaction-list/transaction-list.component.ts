@@ -25,27 +25,22 @@ export class TransactionListComponent implements OnInit {
     ngOnInit(): void {
         this.currentDateChosen = moment(new Date()).format('YYYY-MM-DD');
         this.isYearly = false;
-        console.log('ngOnInit: yearly ' + this.isYearly + 'currentDate: '+ this.currentDateChosen)
-
         this.getTransactions(false, this.currentDateChosen);
     }
 
     dateHasBeenChosen($event: Date) {
         this.currentDateChosen = moment($event).format('YYYY-MM-DD');
-        console.log('dateHasBeenChosen: ' + this.currentDateChosen)
         this.getTransactions(this.isYearly, this.currentDateChosen );
     }
 
     onPeriodChosen($event: boolean){
         this.isYearly = $event;
-        console.log('onPeriodChosen: ' + this.isYearly)
         this.getTransactions($event, this.currentDateChosen);
     }
 
     getTransactions(yearly: boolean, month: string){
         this.transactionService.getTransactionsList(yearly, month).subscribe({
             next: response => {
-                console.log(response.list);
                 this.transactions = response.list;
             },
             error: error => {

@@ -40,16 +40,13 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
         });
 
         this.categoryService.getIcons().subscribe({
-          next: response => {
-            this.icons = response;
-            console.log('icons');
-            console.log(response);
-          },
-              error: err => {
-                  console.log(err);
-                  this.error = err;
-                  this.errorMessage = err.errorMessage;
-              }
+            next: response => {
+                this.icons = response;
+            },
+            error: err => {
+                this.error = err;
+                this.errorMessage = err.errorMessage;
+            }
       })
 
         
@@ -63,10 +60,9 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
                   this.displayCategory()
                 },
                 error: err => {
-                    console.log(err);
                     this.error = err;
                     this.errorMessage = err.errorMessage;
-              }
+                }
             })
           }
         )
@@ -95,7 +91,6 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
             this.categoryService.updateCategory(this.category!.id, request).subscribe({ // updateCategory
                 next: () => this.onSaveComplete(),
                 error: err => {
-                    console.log(err);
                     this.error = err;
                     this.errorMessage = err.errorMessage;
                 }

@@ -1,3 +1,11 @@
+<div class="error-message" *ngIf="!!error">
+    <app-error
+        [errorMessage]="errorMessage || null"
+        [error]="error"
+        [displayHeader]="false">
+    </app-error>
+</div>
+
 <div class="card-holder col-10 offset-1 mt-5">
     <h2> {{pageTitle}}</h2>
     <div class="card-body mt-4">
