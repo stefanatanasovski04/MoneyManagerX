@@ -51,6 +51,14 @@ export class TransactionListComponent implements OnInit {
     }
 
     deleteTransaction(transactionId: number){
-
+        this.transactionService.deleteTransaction(transactionId).subscribe({
+            next: () => {
+                this.getTransactions(this.isYearly, this.currentDateChosen)
+            },
+            error: err => {
+                this.error = err;
+                this.errorMessage = err.errorMessage;
+            }
+        })
     }
 }

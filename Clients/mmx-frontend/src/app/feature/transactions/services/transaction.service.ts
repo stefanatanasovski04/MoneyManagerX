@@ -42,4 +42,12 @@ export class TransactionService {
                 catchError(error => throwError(error))
             )
     }
+
+    deleteTransaction(id: number) {
+        return this.http.delete<IEnvelope<void>>(`${this.baseUrl}/transactions/${id}`)
+            .pipe(
+                map((response: IEnvelope<void>) => response.result),
+                catchError(error => throwError(error))            
+            );
+    }
 }
