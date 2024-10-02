@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, throwError } from 'rxjs';
-import { IEnvelope, IListResult } from 'src/app/shared/models/models';
+import { catchError, map, tap, throwError } from 'rxjs';
+import { IEnvelope, IListResult, ITypeResult } from 'src/app/shared/models/models';
 import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { ITransaction } from 'src/app/shared/models/responses';
 
@@ -50,4 +50,19 @@ export class TransactionService {
                 catchError(error => throwError(error))            
             );
     }
+
+    getTotalExpense() {
+        return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/expense?date=2024-10-03`)
+            .pipe(
+                map(response => response.result.result),
+                catchError(error => throwError(error))
+            );
+    }
+      getTotalIncome() {
+            return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/income?date=2024-10-03`)
+            .pipe(
+                map(response => response.result.result),
+                catchError(error => throwError(error))
+            );
+      }
 }

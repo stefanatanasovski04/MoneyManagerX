@@ -9,3 +9,7 @@ export interface IEnvelope<T> {
     result: T;
     error: string;
 }
+
+export interface ITypeResult<T> {
+    result: T;
+}

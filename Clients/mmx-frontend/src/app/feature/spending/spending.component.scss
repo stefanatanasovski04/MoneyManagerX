@@ -1,0 +1,38 @@
+.card-holder {
+    margin-top: 10px;
+    border-radius: 25px;
+    border: 2px solid #616d67;
+    padding: 20px;
+    background-color: rgb(236, 228, 217);
+    font-family: 'Times New Roman', serif;
+  }
+
+  .title-wrapper,.heading-wrapper, .add-btn-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .heading-text{
+    font-size:300% ;
+    color: rgb(7, 7, 7);
+    font-family: 'Times New Roman', serif;
+  }
+  .income {
+    color: rgb(55, 211, 55);
+    font-size: 200%;
+  
+  }
+  .expense {
+    color: red;
+    font-size: 200%;
+  }
+  .lbl{
+    font-size: 200%;
+  }
+  .balance{
+    color: rgb(115, 115, 223);
+    font-size: 200%;
+  }
+  .heading-text{
+    text-align: center;
+  }
