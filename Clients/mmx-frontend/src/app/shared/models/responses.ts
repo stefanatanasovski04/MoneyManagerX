@@ -1,4 +1,6 @@
-import { CategoryType } from "./enums";
+import { Time } from "@angular/common";
+import { CategoryType, TransactionType } from "./enums";
+import { CategoryDto } from "./dtos";
 
 export interface ICategory{
     id: number,
@@ -10,4 +12,14 @@ export interface ICategory{
 export interface IIcon{
     id: number,
     photoUrl: any
+}
+
+export interface ITransaction{
+    id: number,
+    name: string,
+    type: TransactionType,
+    amount: number,
+    transactionDate: Date,
+    transactionTime: Time,
+    category: CategoryDto
 }

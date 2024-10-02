@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="error-message" *ngIf="!!error">
+        <app-error
+            [errorMessage]="errorMessage || null"
+            [error]="error"
+            [displayHeader]="false">
+        </app-error>
+    </div>
+    <div class="row mt-2">
+        <div class="heading-wrapper col-6 ">
+          <h2 class="heading-text">Transactions</h2>
+        </div>
+        <div class="add-btn-wrapper col-6">
+          <a class="btn btn-success btn-lg" [routerLink]="['/transactions','add']">Add new Transaction</a>
+        </div>
+      </div>
+    <app-datepicker (dateChosen)="dateHasBeenChosen($event)"></app-datepicker>
+
+    <app-dropdown (periodChosen)="onPeriodChosen($event)"></app-dropdown>
+            
+    <ul class="category-list">
+        <li *ngFor="let transaction of transactions" class="mt-2">
+            <div class="card-holder col-12">
+                <div class="row g-0 list-row">
+                    <div class="col-lg-2 mb-2 mt-2 ">
+                        <img [src]="transaction.category.photoUrl" class="thumbnail-list" alt="...">
+                    </div>
+                    <div *ngIf="transaction.name.length" class="col-lg-2 title-wrapper">
+                        <h5 class="card-title">{{transaction.name}}</h5>
+                    </div>
+                    <div *ngIf="!transaction.name.length" class="col-lg-2 title-wrapper">
+                        <h5 class="card-title">{{transaction.category.name}}</h5>
+                    </div>
+            
+                    <div class="col-lg-2 title-wrapper">
+                        <h5 class="card-title">{{transaction.transactionDate | date}}</h5>
+                    </div>
+
+                    <div class="col-lg-2 title-wrapper">
+                        <h5 class="card-title">{{transaction.transactionTime}}</h5>
+                    </div>
+                    
+                    <div class="col-lg-2 title-wrapper">
+                        <h5 [ngClass]="{'income': transaction.type == TransactionType.Income, 'expense': transaction.type == TransactionType.Expense}">${{transaction.amount}}
+                    </h5>
+                    </div>
+            
+                    <div class="col-lg-2 dugme mt-4 mb-2">
+                        <a [routerLink]="['/transactions',transaction.id,'edit']" class="btn btn-outline-secondary btn-wrapper btn-lg"
+                            style="width: 90px; height: 48px;"><i>Edit</i></a>
+                        <a (click)="deleteTransaction(transaction.id)" class="btn btn-danger btn-wrapper btn-lg" style="width: 90px; height: 48px; margin-left: 5px;">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+      </ul>
+</div>
