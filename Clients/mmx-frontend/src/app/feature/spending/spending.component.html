@@ -1,0 +1,48 @@
+<div class="error-message" *ngIf="!!error">
+    <app-error
+        [errorMessage]="errorMessage || null"
+        [error]="error"
+        [displayHeader]="false">
+    </app-error>
+</div>
+
+<div class="heading-wrapper col-12 mt-2">
+    <h2 class="heading-text">Your Spendings</h2>
+</div>
+
+<div class="card-holder">
+    <div class="col-10 offset-1">
+        <div class="col-5 title-wrapper">
+            <h5 class="lbl">Income:</h5>
+        </div>
+        <div class="col-5 title-wrapper">
+            <h5 class="income">{{income | currency}}</h5>
+        </div>
+    </div>
+
+    <div class="col-10 offset-1">
+        <div class="col-5 title-wrapper">
+            <h5 class="lbl">Expense:</h5>
+        </div>
+        <div class="col-5 title-wrapper">
+            <h5 class="expense">{{expense | currency}}</h5>
+        </div>
+        <hr>
+    </div>
+
+
+    <div class="col-10 offset-1">
+        <div class="col-5 title-wrapper">
+            <h5 class="lbl">Balance:</h5>
+        </div>
+        <div class="col-5 title-wrapper">
+            <h5 class="balance">{{total | currency}}</h5>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="col-8 offset-2 mt-4">
+    <a [routerLink]="['/transactions','add']" class="btn btn-success btn-lg" style="width: 100%;">Add Transaction</a>
+</div>
