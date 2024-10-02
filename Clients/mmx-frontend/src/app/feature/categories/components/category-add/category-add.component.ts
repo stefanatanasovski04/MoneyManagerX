@@ -19,6 +19,7 @@ export class CategoryAddComponent implements OnInit{
     public error?: HttpErrorResponse;
     categoryForm!: FormGroup;
     icons: IIcon[] = [];
+    public CategoryType = CategoryType;
 
       constructor(
           private categoryService: CategoryService,

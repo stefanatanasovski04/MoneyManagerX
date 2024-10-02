@@ -1,0 +1,135 @@
+.income {
+    color: rgb(55, 211, 55);
+    font-size: 250%;
+  
+  }
+  .expense {
+    color: red;
+    font-size: 250%;
+  }
+  
+  .saldo-income {
+    background-color: rgb(151, 231, 176);
+    border-radius: 10px;
+    height: 40px;
+    position: relative;
+    border: 1px solid black;
+  }
+  .saldo-expense {
+    background-color: rgb(255, 164, 164);
+    border-radius: 10px;
+    position: relative;
+    border: 1px solid black;
+  }
+  .total-income {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    font-size: 25px;
+    color: rgb(8, 107, 40);
+  }
+  .total-expense {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    font-size: 25px;
+    color: rgb(161, 8, 8);
+  }
+  
+  .card-holder {
+    border: 1px solid sandybrown;
+    border-radius: 15px;
+  }
+  ul {
+    list-style: none;
+  }
+  
+  .card-holder {
+    margin-top: 20px;
+    border-radius: 25px;
+    border: 2px solid #616d67;
+    padding: 20px;
+    background-color: rgb(236, 228, 217);
+    font-family: "Times New Roman", serif;
+  }
+  
+  .category-list {
+    list-style-type: none;
+  }
+  .list-row {
+    text-align: center;
+  }
+  .card-body {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  .dugme .card-title {
+    text-align: center;
+    justify-content: center;
+  }
+  .btn-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .title-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-holder {
+    margin-top: 20px;
+    border-radius: 25px;
+    border: 2px solid #616d67;
+    padding: 20px;
+    background-color: rgb(236, 228, 217);
+    font-family: "Times New Roman", serif;
+  }
+  .category-list {
+    list-style-type: none;
+  }
+  input {
+    font-size: 200%;
+  }
+  .list-row,
+  .add-btn-wrapper {
+    text-align: center;
+  }
+  .card-body {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  .btn {
+    font-family: "Times New Roman", serif;
+  }
+  .title-wrapper,
+  .heading-wrapper,
+  .add-btn-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card-title {
+    font-size: 250%;
+  }
+  .heading-text {
+    font-size: 300%;
+    color: rgb(7, 7, 7);
+    font-family: "Times New Roman", serif;
+  }

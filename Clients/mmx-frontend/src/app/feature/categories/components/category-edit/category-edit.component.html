@@ -1,3 +1,11 @@
+<div class="error-message" *ngIf="!!error">
+    <app-error
+        [errorMessage]="errorMessage || null"
+        [error]="error"
+        [displayHeader]="false">
+    </app-error>
+</div>
+
 <div class="card-holder col-10 offset-1 mt-5">
     <h2> {{pageTitle}}</h2>
     <div class="card-body mt-4">
@@ -5,13 +13,13 @@
             <div class="col-10 offset-1">
                 <div class="type-transaction-div">
                     <input type="radio" class="btn-check" name="categoryType" id="danger-outlined" autocomplete="off"
-                        value="0" formControlName="categoryType" [checked]="true">
+                        value="{{CategoryType.Expense}}" formControlName="categoryType" [checked]="true">
                     <label class="btn btn-outline-danger btn-lg" for="danger-outlined"
                         style="width: 98%;">Expense</label>
                 </div>
                 <div class="type-transaction-div">
                     <input type="radio" class="btn-check" name="categoryType" id="success-outlined"
-                        autocomplete="off" value="1" formControlName="categoryType">
+                        autocomplete="off" value="{{CategoryType.Income}}" formControlName="categoryType">
                     <label class="btn btn-outline-success btn-lg" for="success-outlined"
                         style="width: 98%;">Income</label>
                 </div>

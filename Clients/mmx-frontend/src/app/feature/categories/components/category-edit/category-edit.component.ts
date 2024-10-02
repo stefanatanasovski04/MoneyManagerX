@@ -22,6 +22,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     public error?: HttpErrorResponse;
     public category!: ICategory | undefined;
     icons: IIcon[] = [];
+    public CategoryType = CategoryType;
     
 
     
@@ -34,21 +35,18 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.categoryForm = this.fb.group({
             categoryName: '',
-            categoryType: 0,
+            categoryType: CategoryType.Expense,
             iconId: null
         });
 
         this.categoryService.getIcons().subscribe({
-          next: response => {
-            this.icons = response;
-            console.log('icons');
-            console.log(response);
-          },
-              error: err => {
-                  console.log(err);
-                  this.error = err;
-                  this.errorMessage = err.errorMessage;
-              }
+            next: response => {
+                this.icons = response;
+            },
+            error: err => {
+                this.error = err;
+                this.errorMessage = err.errorMessage;
+            }
       })
 
         
@@ -62,10 +60,9 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
                   this.displayCategory()
                 },
                 error: err => {
-                    console.log(err);
                     this.error = err;
                     this.errorMessage = err.errorMessage;
-              }
+                }
             })
           }
         )
@@ -83,7 +80,6 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
         })
     }
     saveCategory() {
-      debugger;
         let iconId: number = Number(this.categoryForm.value.iconId);
         let categoryType: CategoryType = Number.parseInt(this.categoryForm.value.categoryType);
         if (this.categoryForm.valid) {
@@ -95,7 +91,6 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
             this.categoryService.updateCategory(this.category!.id, request).subscribe({ // updateCategory
                 next: () => this.onSaveComplete(),
                 error: err => {
-                    console.log(err);
                     this.error = err;
                     this.errorMessage = err.errorMessage;
                 }
