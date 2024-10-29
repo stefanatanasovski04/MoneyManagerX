@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -11,7 +12,8 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
   ],
   imports: [
     CommonModule,
-    MdbCollapseModule
+    MdbCollapseModule,
+    RouterModule.forChild([])
   ],
   exports: [
     NavBarComponent

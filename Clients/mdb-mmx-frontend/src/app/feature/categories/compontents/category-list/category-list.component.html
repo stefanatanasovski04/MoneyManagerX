@@ -1,0 +1,43 @@
+<div class="mb-3">
+    <label for="categoryTypeSelect" class="form-label">Filter by Category Type:</label>
+    <select id="categoryTypeSelect" class="form-select" [(ngModel)]="selectedCategoryType" (change)="filterCategories()">
+      <option value="0" selected>Expense</option>
+      <option value="1">Income</option>
+      <option value="2">---</option>
+    </select>
+  </div>
+<table class="table align-middle mb-0 bg-white">
+    <tbody>
+      <tr *ngFor="let cateogry of filteredCategories">
+        <td>
+          <div class="d-flex align-items-center">
+            <img
+                [src]="cateogry.icon.photoUrl"
+                alt="..."
+                style="width: 70; height: 70px"
+                />
+          </div>
+        </td>
+        <td>
+            <div class="ms-5">
+                <h4 class="fw-bold mb-1">{{cateogry.name}} </h4>
+            </div>
+        </td>
+        <td>
+          <h5><span *ngIf="cateogry.type === CategoryType.Income" class="badge badge-success rounded-pill d-inline">Income</span></h5>
+          <h5><span *ngIf="cateogry.type === CategoryType.Expense" class="badge badge-danger rounded-pill d-inline">Expense</span></h5>
+        </td>
+        <td>
+            <div>
+                <button type="button" class="btn btn-primary btn-sm btn-rounded">
+                    Edit
+                </button>
+
+                <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="deleteCategory(cateogry.id)">
+                    Delete
+                </button>
+            </div>
+          </td>
+      </tr>
+    </tbody>
+  </table>
