@@ -1,11 +1,18 @@
-<div class="mb-3">
+
+<div class="row" style="align-items: top;">
+  <div class="mb-3 col-5">
     <label for="categoryTypeSelect" class="form-label">Filter by Category Type:</label>
     <select id="categoryTypeSelect" class="form-select" [(ngModel)]="selectedCategoryType" (change)="filterCategories()">
       <option value="0" selected>Expense</option>
       <option value="1">Income</option>
       <option value="2">---</option>
     </select>
-  </div>
+</div>
+<div class="col-5">
+  <button class="btn btn-primary" (click)="openAddModal()">Add Category</button>
+</div>
+</div>
+
 <table class="table align-middle mb-0 bg-white">
     <tbody>
       <tr *ngFor="let cateogry of filteredCategories">

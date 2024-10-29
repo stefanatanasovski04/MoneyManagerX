@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { CategoryType } from 'src/app/shared/models/enums';
 import { ICategory } from 'src/app/shared/models/responses';
 import { CategoriesService } from '../../categories.service';
+import { CategoryAddComponent } from '../../components/category-add/category-add.component';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-category-list',
@@ -11,12 +13,17 @@ import { CategoriesService } from '../../categories.service';
 })
 export class CategoryListComponent {
 
-  constructor (private categoryService: CategoriesService) {}
+  constructor (
+    private categoryService: CategoriesService,
+    private modalService: MdbModalService
+    ) {}
 
   public categories: ICategory[] = [];
   public CategoryType = CategoryType;
   public errorMessage = '';
   public error?: HttpErrorResponse;
+  
+  modalRef: MdbModalRef<CategoryAddComponent> | null = null;
 
   filteredCategories = [];
   selectedCategoryType;
@@ -26,8 +33,8 @@ export class CategoryListComponent {
       .subscribe({
           next: data =>  {
             this.categories = data.list;
-            this.filteredCategories = data.list;
             this.selectedCategoryType = 0;
+            this.filterCategories();
           },
         error: err => {
           this.error = err;
@@ -70,4 +77,13 @@ export class CategoryListComponent {
           }
       });
   }
+
+    openAddModal(){
+        this.modalRef = this.modalService.open(CategoryAddComponent) 
+
+        this.modalRef.onClose.subscribe(() => {
+            console.log('ModalClosed!!!');
+            this.getCategories();
+        })
+    }
 }
