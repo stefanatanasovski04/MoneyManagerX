@@ -21,6 +21,12 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoriesModule } from './feature/categories/categories.module';
+import { TransactionsModule } from './feature/transactions/transactions.module';
+import { SpendingModule } from './feature/spending/spending.module';
+import { SharedModule } from './shared/shared.module';
+import { StatisticsModule } from './feature/statistics/statistics.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
+    CategoriesModule,
+    TransactionsModule,
+    SpendingModule,
+    StatisticsModule,
+    SharedModule,
+    RouterModule.forRoot([
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
