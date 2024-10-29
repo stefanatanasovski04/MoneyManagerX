@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { CategoryType } from 'src/app/shared/models/enums';
 import { ICategory } from 'src/app/shared/models/responses';
 import { CategoriesService } from '../../categories.service';
-import { CategoryAddComponent } from '../../components/category-add/category-add.component';
+import { CategoryAddComponent } from '../category-add/category-add.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
