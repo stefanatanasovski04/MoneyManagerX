@@ -5,6 +5,7 @@ import { ICategory } from 'src/app/shared/models/responses';
 import { CategoriesService } from '../../categories.service';
 import { CategoryAddComponent } from '../category-add/category-add.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { CategoryEditComponent } from '../category-edit/category-edit.component';
 
 @Component({
   selector: 'app-category-list',
@@ -23,7 +24,8 @@ export class CategoryListComponent {
   public errorMessage = '';
   public error?: HttpErrorResponse;
   
-  modalRef: MdbModalRef<CategoryAddComponent> | null = null;
+  modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
+  modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
 
   filteredCategories = [];
   selectedCategoryType;
@@ -79,10 +81,19 @@ export class CategoryListComponent {
   }
 
     openAddModal(){
-        this.modalRef = this.modalService.open(CategoryAddComponent) 
+        this.modalRefAdd = this.modalService.open(CategoryAddComponent) 
 
-        this.modalRef.onClose.subscribe(() => {
-            console.log('ModalClosed!!!');
+        this.modalRefAdd.onClose.subscribe(() => {
+            this.getCategories();
+        })
+    }
+
+    openEditModal(id: number){
+        this.modalRefEdit = this.modalService.open(CategoryEditComponent, {
+            data: {categoryId: id }
+        }) 
+
+        this.modalRefEdit.onClose.subscribe(() => {
             this.getCategories();
         })
     }
