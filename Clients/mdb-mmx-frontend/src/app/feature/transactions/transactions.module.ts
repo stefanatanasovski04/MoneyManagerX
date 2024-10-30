@@ -10,10 +10,12 @@ import { TransactionAddComponent } from './components/transaction-add/transactio
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TransactionEditComponent } from './components/transaction-edit/transaction-edit.component';
 @NgModule({
   declarations: [
     TransactionListComponent, 
-    TransactionAddComponent
+    TransactionAddComponent,
+    TransactionEditComponent
   ],
   imports: [
     CommonModule,

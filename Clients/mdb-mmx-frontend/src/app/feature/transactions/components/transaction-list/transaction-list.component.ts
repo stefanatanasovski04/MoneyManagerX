@@ -6,6 +6,7 @@ import { TransactionType } from 'src/app/shared/models/enums';
 import moment from 'moment';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
+import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -26,7 +27,7 @@ export class TransactionListComponent {
     public isYearly!: boolean;
       
     modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
-    // modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
+    modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
 
 
     ngOnInit(): void {
@@ -68,7 +69,14 @@ export class TransactionListComponent {
             }
         })
     }
-    openEditModal(transactionId: number){
+    openEditModal(id: number){
+        this.modalRefEdit = this.modalService.open(TransactionEditComponent, {
+            data: {transactionId: id }
+        }) 
+
+        this.modalRefEdit.onClose.subscribe(() => {
+            this.getTransactions(this.isYearly, this.currentDateChosen);
+        })
     }
 
     openAddModal(){
