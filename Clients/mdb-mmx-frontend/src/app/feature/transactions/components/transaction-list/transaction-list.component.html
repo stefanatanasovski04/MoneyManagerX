@@ -1,5 +1,12 @@
-<app-datepicker (dateChosen)="dateHasBeenChosen($event)"></app-datepicker>
-<app-period-dropdown (periodChosen)="onPeriodChosen($event)"></app-period-dropdown>
+<div class="row">
+    <div class="col-5">
+        <app-datepicker (dateChosen)="dateHasBeenChosen($event)"></app-datepicker>
+        <app-period-dropdown (periodChosen)="onPeriodChosen($event)"></app-period-dropdown>
+    </div>
+    <div class="col-5">
+      <button class="btn btn-primary" (click)="openAddModal()">Add Transaction</button>
+    </div>
+</div>
 
 <table class="table align-middle mb-0 bg-white">
       <tbody>
@@ -19,6 +26,11 @@
               </div>
               <div *ngIf="!transaction.name.length" class="ms-5">
                 <h5 class="fw-bold mb-1">{{transaction.category.name}} </h5>
+            </div>
+          </td>
+          <td>
+            <div class="ms-5">
+                <h5 class="fw-bold mb-1">{{transaction.amount}}ден </h5>
             </div>
           </td>
           <td>

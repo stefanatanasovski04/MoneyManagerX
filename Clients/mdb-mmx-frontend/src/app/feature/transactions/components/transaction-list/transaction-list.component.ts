@@ -4,6 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ITransaction } from 'src/app/shared/models/responses';
 import { TransactionType } from 'src/app/shared/models/enums';
 import moment from 'moment';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -11,7 +13,10 @@ import moment from 'moment';
   styleUrl: './transaction-list.component.scss'
 })
 export class TransactionListComponent {
-  constructor(private transactionService: TransactionsService){}
+    constructor(
+        private transactionService: TransactionsService,
+        private modalService: MdbModalService
+    ){}
 
     public error?: HttpErrorResponse;
     public errorMessage = '';
@@ -19,6 +24,10 @@ export class TransactionListComponent {
     public TransactionType = TransactionType;
     public currentDateChosen!: string;
     public isYearly!: boolean;
+      
+    modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
+    // modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
+
 
     ngOnInit(): void {
         this.currentDateChosen = moment(new Date()).format('YYYY-MM-DD');
@@ -60,6 +69,13 @@ export class TransactionListComponent {
         })
     }
     openEditModal(transactionId: number){
+    }
 
+    openAddModal(){
+        this.modalRefAdd = this.modalService.open(TransactionAddComponent) 
+
+        this.modalRefAdd.onClose.subscribe(() => {
+            this.getTransactions(this.isYearly, this.currentDateChosen)
+        })
     }
 }
