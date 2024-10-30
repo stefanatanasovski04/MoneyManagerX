@@ -1,0 +1,29 @@
+.icon-img-select{
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+}
+.sel-option{
+    width: 100px;
+    height: 50px;
+}
+/* HIDE RADIO */
+[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+/* IMAGE STYLES */
+[type=radio] + img {
+    cursor: pointer;
+    padding: 3px;
+}
+  
+  /* CHECKED STYLES */
+  [type=radio]:checked + img {
+    border: 2px solid rgb(58, 56, 56);
+    background-color: #CCD4DE;
+    border-radius: 10px;
+  }

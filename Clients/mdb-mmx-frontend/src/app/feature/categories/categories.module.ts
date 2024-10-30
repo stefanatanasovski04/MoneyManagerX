@@ -7,6 +7,7 @@ import { CategoryListComponent } from './components/category-list/category-list.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryAddComponent } from './components/category-add/category-add.component';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { CategoryEditComponent } from './components/category-edit/category-edit.component';
 
 
 
@@ -14,6 +15,7 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
   declarations: [
     CategoryListComponent,
     CategoryAddComponent,
+    CategoryEditComponent,
   ],
   imports: [
     CommonModule,

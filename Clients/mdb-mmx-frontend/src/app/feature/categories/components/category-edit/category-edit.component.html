@@ -1,0 +1,66 @@
+<div class="modal-content">
+    <div class="modal-body p-4">
+        <!-- Pills content -->
+        <div class="tab-content">
+            <div class="tab-pane fade active show" id="pills-register" role="tabpanel" aria-labelledby="mdb-tab-register">
+                <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+                
+                <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                <hr>          
+                <!-- Cateogry Type -->
+                <div class="form-outline mb-4">
+                    <div class=" col-8 offset-2 btn-group">
+                        <input
+                            mdbRadio
+                            type="radio"
+                            class="btn-check"
+                            name="categoryType"
+                            formControlName="categoryType"
+                            id="option1"
+                            [value]="0"
+                            autocomplete="off"
+                            [checked]="true"
+                        />
+                        <label class="btn btn-secondary" for="option1">Expense</label>
+                        <input
+                            mdbRadio
+                            type="radio"
+                            class="btn-check"
+                            name="categoryType"
+                            formControlName="categoryType"
+                            id="option2"
+                            [value]="1"
+                            autocomplete="off"
+                        />
+                        <label class="btn btn-secondary" for="option2">Income</label>
+                    </div>
+                </div>
+
+                <!-- Name input -->
+                <mdb-form-control class="mb-4">
+                    <input mdbInput formControlName="categoryName" type="text" id="categoryName" class="form-control" />
+                    <label mdbLabel class="form-label" for="categoryName">Name</label>
+                </mdb-form-control>
+
+                <!-- Icons selection input -->
+                <div class="form-outline mb-4">
+                    <label for="categoryIcon">Icon: </label>
+                    
+                    <div id="categoryIcon" class="mt-2">
+                        <label *ngFor="let icon of icons">
+                            <input type="radio" name="iconId" value="{{icon.id}}" formControlName="iconId">
+                            <img [src]="icon?.photoUrl" class="icon-img-select">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-1">Save</button>
+                <a class="btn btn-outline-danger btn-block mb-1"
+                                    (click)="onCancel()"> Cancel </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -38,8 +38,6 @@ export class CategoryAddComponent implements OnInit {
         this.categoryService.getIcons().subscribe({
             next: response => {
               this.icons = response;
-              console.log('icons');
-              console.log(response);
             },
                 error: err => {
                     console.log(err);
