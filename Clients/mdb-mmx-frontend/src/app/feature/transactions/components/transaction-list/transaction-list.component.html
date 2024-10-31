@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-5">
+        <app-datepicker (dateChosen)="dateHasBeenChosen($event)"></app-datepicker>
+        <app-period-dropdown (periodChosen)="onPeriodChosen($event)"></app-period-dropdown>
+    </div>
+    <div class="col-5">
+      <button class="btn btn-primary" (click)="openAddModal()">Add Transaction</button>
+    </div>
+</div>
+
+<table class="table align-middle mb-0 bg-white">
+      <tbody>
+      <tr *ngFor="let transaction of transactions">
+          <td>
+            <div class="d-flex align-items-center">
+              <img
+                  [src]="transaction.category.photoUrl"
+                  alt="..."
+                  style="width: 70; height: 70px"
+                  />
+            </div>
+          </td>
+          <td>
+              <div *ngIf="transaction.name.length" class="ms-5">
+                  <h5 class="fw-bold mb-1">{{transaction.name}} </h5>
+              </div>
+              <div *ngIf="!transaction.name.length" class="ms-5">
+                <h5 class="fw-bold mb-1">{{transaction.category.name}} </h5>
+            </div>
+          </td>
+          <td>
+            <div class="ms-5">
+                <h5 class="fw-bold mb-1">{{transaction.amount}}ден </h5>
+            </div>
+          </td>
+          <td>
+            <div class="ms-5">
+                <h5 class="fw-bold mb-1">{{transaction.transactionDate | date}} </h5>
+            </div>
+          </td>
+          <td>
+            <div class="ms-5">
+                <h5 class="fw-bold mb-1">{{transaction.transactionTime}} </h5>
+            </div>
+          </td>
+
+          <td>
+            <h5><span *ngIf="transaction.type === TransactionType.Income" class="badge badge-success rounded-pill d-inline">Income</span></h5>
+            <h5><span *ngIf="transaction.type === TransactionType.Expense" class="badge badge-danger rounded-pill d-inline">Expense</span></h5>
+          </td>
+          <td>
+              <div>
+                  <button type="button" class="btn btn-primary btn-sm btn-rounded" (click)="openEditModal(transaction.id)">
+                      Edit
+                  </button>
+  
+                  <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="deleteTransaction(transaction.id)">
+                      Delete
+                  </button>
+              </div>
+         </td>
+        </tr>
+      </tbody>
+    </table>

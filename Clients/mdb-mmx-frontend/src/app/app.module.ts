@@ -27,6 +27,7 @@ import { SpendingModule } from './feature/spending/spending.module';
 import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './feature/statistics/statistics.module';
 import { RouterModule } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,9 @@ import { RouterModule } from '@angular/router';
     RouterModule.forRoot([
     ])
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
