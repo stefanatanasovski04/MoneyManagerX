@@ -8,6 +8,7 @@ import { CategoriesService } from 'src/app/feature/categories/categories.service
 import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { Time } from '@angular/common';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-add',
@@ -22,12 +23,14 @@ export class TransactionAddComponent {
     public selectedTransacionType = 0;
     transactionForm!: FormGroup;
     TransactionType = TransactionType;
+    fromSpending: boolean = false;
 
     public error?: HttpErrorResponse;
     public errorMessage = '';
 
     constructor(
         private transactionService: TransactionsService,
+        private router: Router,
         private categoryService: CategoriesService,
         public modalRef: MdbModalRef<TransactionAddComponent>,
         private fb: FormBuilder
@@ -93,5 +96,10 @@ export class TransactionAddComponent {
     onSaveComplete(): void {
         this.transactionForm.reset();
         this.modalRef.close()
+        console.log(`From Spending:`);
+        console.log(this.fromSpending);
+        if (this.fromSpending){
+            this.router.navigate(['/transactions'])
+        }
     }
 }

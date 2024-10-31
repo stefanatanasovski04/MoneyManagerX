@@ -11,6 +11,7 @@
     using MMX.Application.Domain.Categories.GetCategory;
     using MMX.Application.Domain.Categories.IconsList;
     using MMX.Application.Domain.Categories.List;
+    using MMX.Application.Domain.Categories.TotalAmountPerCategory;
     using MMX.Application.Domain.Categories.TransactionsByCategory;
     using MMX.Application.Domain.Categories.UpdateCategory;
     using MMX.Application.Domain.Transactions.List;
@@ -98,6 +99,19 @@
         {
             return await commandExecutor.Execute<UpdateCategoryCommand, VoidResult>(
                 new UpdateCategoryCommand(id, request.Name, request.Type, request.IconFk));
+        }
+
+        [SwaggerOperation(Summary = "Total by category.", Description = "Total by category.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "List retrieved successfully.")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
+        [HttpGet("total-per-cateogry")]
+        public async Task<EnvelopeGeneric<List<TotalByCategoryResponse>>> GetTotalByCategory(
+            [FromQuery] DateOnly month,
+            [FromQuery] bool yearly)
+        {
+            return await queryReader.Get<GetTotalAmountPerCategoryQuery, EnvelopeGeneric<List<TotalByCategoryResponse>>>(new GetTotalAmountPerCategoryQuery(month, yearly));
         }
 
         [SwaggerOperation(Summary = "Transactions by category.", Description = "Transactions by category.")]
