@@ -5,7 +5,6 @@
     using MMX.Common.Contracts;
     using MMX.Common.Dtos;
     using MMX.Common.Mediator.Handlers;
-    using MMX.Common.ValueObjects.SortingValue;
     using MMX.Infrastructure;
     using MMX.Infrastructure.Entity.Transaction;
     using System.Threading.Tasks;
@@ -23,14 +22,22 @@
         public override async Task<EnvelopeGeneric<ListResultDto<TransactionResponse>>> Handle(TransactionsListQuery query)
         {
             IQueryable<Transaction> baseQuery = query.Yearly
-                ? dbContext.Transactions.Where(x => x.TransactionDate.Year == query.Month.Year).Include(x => x.Category).ThenInclude(x => x!.Icon)
-                : dbContext.Transactions.Where(x => x.TransactionDate.Month == query.Month.Month).Include(x => x.Category).ThenInclude(x => x!.Icon);
-
-            IQueryable<Transaction> sortedTransactions = baseQuery.ApplyOrder(query.Sorting, defaultSorting: category => category.Id);
+                ? dbContext.Transactions
+                    .Where(x => x.TransactionDate.Year == query.Month.Year)
+                    .Include(x => x.Category)
+                        .ThenInclude(x => x!.Icon)
+                    .OrderByDescending(x => x.TransactionDate)
+                        .ThenByDescending(x => x.TransactionTime)
+                : dbContext.Transactions
+                    .Where(x => x.TransactionDate.Year == query.Month.Year && x.TransactionDate.Month == query.Month.Month)
+                    .Include(x => x.Category)
+                        .ThenInclude(x => x!.Icon)
+                    .OrderByDescending(x => x.TransactionDate)
+                        .ThenByDescending(x => x.TransactionTime);
 
             int totalTransactions = await baseQuery.CountAsync();
 
-            List<Transaction> dbResult = await sortedTransactions.Skip(query.Paging.Skip).Take(query.Paging.Take).ToListAsync();
+            List<Transaction> dbResult = await baseQuery.Skip(query.Paging.Skip).Take(query.Paging.Take).ToListAsync();
 
             List<TransactionResponse> responseList = MapToResponse(dbResult);
 

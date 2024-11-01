@@ -12,8 +12,9 @@ export class SpendingService {
 
     constructor(private http: HttpClient) {}
 
-    getTotalIncome() {
-      return this.http.get<IEnvelope<ITotalByCategoryResponse[]>>(`${this.baseUrl}/categories/total-per-cateogry?month=2024-09-22`)
+    getTotalIncomePerCateogry(isYearly: boolean, currentMonth = new Date().toISOString().split('T')[0]) {
+      console.log(new Date().toISOString().split('T')[0])
+      return this.http.get<IEnvelope<ITotalByCategoryResponse[]>>(`${this.baseUrl}/categories/total-per-cateogry?month=${currentMonth}&yearly=${isYearly}`)
       .pipe(
           map(response => response.result),
           catchError(error => throwError(error))

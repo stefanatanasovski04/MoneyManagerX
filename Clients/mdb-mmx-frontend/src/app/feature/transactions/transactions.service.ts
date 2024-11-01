@@ -51,15 +51,15 @@ export class TransactionsService {
           );
   }
 
-  getTotalExpense() {
-      return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/expense?date=2024-10-03`)
+  getTotalExpense(chosenDate: string, isYearly: boolean) {
+      return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/expense?date=${chosenDate}&yearly=${isYearly}`)
           .pipe(
               map(response => response.result.result),
               catchError(error => throwError(error))
           );
   }
-  getTotalIncome() {
-      return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/income?date=2024-10-03`)
+  getTotalIncome(chosenDate: string, isYearly: boolean) {
+      return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/income?date=${chosenDate}&yearly=${isYearly}`)
       .pipe(
           map(response => response.result.result),
           catchError(error => throwError(error))

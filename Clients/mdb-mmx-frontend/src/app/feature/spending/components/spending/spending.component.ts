@@ -34,10 +34,12 @@ export class SpendingComponent {
   }
 
   updateValues(){
-      this.transactionService.getTotalIncome().pipe(
+        let isYearly = false;
+        let currentMonth = new Date().toISOString().split('T')[0];
+      this.transactionService.getTotalIncome(currentMonth, isYearly).pipe(
           switchMap(response => {
               this.income = response;
-              return this.transactionService.getTotalExpense();
+              return this.transactionService.getTotalExpense(currentMonth, isYearly);
           })
       ).subscribe({
           next: (response) => {
@@ -57,7 +59,7 @@ export class SpendingComponent {
   }
 
   getTotalByCategory(){
-      this.spendingService.getTotalIncome().subscribe({
+      this.spendingService.getTotalIncomePerCateogry(false).subscribe({
           next: response => {
               this.totalPerCategoryList = response
               console.log(this.totalPerCategoryList)

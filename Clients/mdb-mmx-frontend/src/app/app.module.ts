@@ -57,6 +57,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     StatisticsModule,
     SharedModule,
     RouterModule.forRoot([
+        {path:'', redirectTo:'spending',pathMatch:'full'},
+        {path:'**', redirectTo:'spending', pathMatch:'full'}
     ])
   ],
   providers: [
