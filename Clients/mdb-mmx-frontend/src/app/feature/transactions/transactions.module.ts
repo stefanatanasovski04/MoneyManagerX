@@ -7,7 +7,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
 import { CommonModule } from '@angular/common';
 import { TransactionAddComponent } from './components/transaction-add/transaction-add.component';
-import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TransactionEditComponent } from './components/transaction-edit/transaction-edit.component';
@@ -23,7 +22,6 @@ import { TransactionEditComponent } from './components/transaction-edit/transact
     ReactiveFormsModule,
     FormsModule,
     MdbFormsModule,
-    NgxMaterialTimepickerModule,
     MatFormFieldModule,
     MatInputModule,
     RouterModule.forChild([
