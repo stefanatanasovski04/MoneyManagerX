@@ -23,3 +23,8 @@ export interface ITransaction{
     transactionTime: Time,
     category: CategoryDto
 }
+
+export interface ITotalByCategoryResponse{
+    category: CategoryDto,
+    total: number,
+}

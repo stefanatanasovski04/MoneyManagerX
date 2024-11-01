@@ -1,0 +1,73 @@
+/* Centering main wrapper */
+.heading-wrapper {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.heading-text {
+    font-size: 1.8rem;
+    color: #343a40;
+}
+
+/* Card container with larger size and centered alignment */
+.card-holder {
+    background-color: #f8f9fa;
+    padding: 2rem;  /* Increased padding */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto; /* Added margin for more space above and below */
+    width: 100%;  /* Full width of the column */
+}
+
+/* Row alignment for labels and values */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.title-wrapper {
+    font-weight: 500;
+}
+
+/* Colors for income, expense, and balance */
+.income {
+    color: #28a745; /* Green for income */
+    font-weight: bold;
+}
+
+.expense {
+    color: #dc3545; /* Red for expense */
+    font-weight: bold;
+}
+
+.balance {
+    color: #007bff; /* Blue for balance */
+    font-weight: bold;
+}
+
+/* Divider styling */
+.card-holder hr {
+    border-top: 1px solid #dee2e6;
+    margin: 0.5rem 0;
+}
+
+/* Centered button */
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-primary {
+
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    display: block;
+    width: 80%; /* Centering the button */
+    margin: 1rem auto;
+    text-align: center;
+}

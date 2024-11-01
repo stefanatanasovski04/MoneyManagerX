@@ -37,3 +37,7 @@ Content-Type: application/json
 ### Get Icons List
 GET  {{Application_HostAddress}}/api/categories/icons
 Accept: application/json
+
+### TotalPerCategory
+GET  {{Application_HostAddress}}/api/categories/total-per-cateogry?month=2024-09-22
+Accept: application/json
