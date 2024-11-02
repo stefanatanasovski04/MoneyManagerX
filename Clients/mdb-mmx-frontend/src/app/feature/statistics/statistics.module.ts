@@ -8,13 +8,15 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartModule } from 'primeng/chart';
 import { PieSpendingsPerCategoryComponent } from './components/pie-spendings-per-category/pie-spendings-per-category.component';
+import { LineGraphYealyIncomesExpensesComponent } from './components/line-graph-yealy-incomes-expenses/line-graph-yealy-incomes-expenses.component';
 
 
 
 @NgModule({
   declarations: [
     StatisticsMainComponent,
-    PieSpendingsPerCategoryComponent
+    PieSpendingsPerCategoryComponent,
+    LineGraphYealyIncomesExpensesComponent
   ],
   imports: [
     CommonModule,

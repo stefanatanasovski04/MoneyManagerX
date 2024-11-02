@@ -58,11 +58,13 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Seeds" />
+    <Folder Include="Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblCategory.sql" />
     <Build Include="Tables\tblIcon.sql" />
     <Build Include="Tables\tblTransaction.sql" />
+    <Build Include="Procedures\sp_GetMonthlyTotals.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Seeds\PopuleteDatabase.Seeds.sql" />
