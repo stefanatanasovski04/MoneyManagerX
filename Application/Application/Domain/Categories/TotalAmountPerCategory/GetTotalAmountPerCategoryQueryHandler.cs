@@ -10,6 +10,7 @@
     using MMX.Infrastructure.Entity.Category;
     using MMX.Infrastructure.Entity.Transaction;
     using System.Threading.Tasks;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     public class GetTotalAmountPerCategoryQueryHandler : QueryHandler<GetTotalAmountPerCategoryQuery, EnvelopeGeneric<List<TotalByCategoryResponse>>>
     {
@@ -23,7 +24,9 @@
         public override async Task<EnvelopeGeneric<List<TotalByCategoryResponse>>> Handle(GetTotalAmountPerCategoryQuery query)
         {
             IEnumerable<Category> categories = await dbContext.Categories
-                .Include(x => x.Transactions)
+                .Include(x => x.Transactions.Where(query.Yearly
+                            ? x => x.TransactionDate.Year == query.Month.Year
+                            : x => x.TransactionDate.Month == query.Month.Month))
                 .ToListAsync();
 
             return Envelope.CreateOk(MapToResponse(categories.Where(x => x.Type == MMX.Domain.Enum.CategoryType.Expense)));
