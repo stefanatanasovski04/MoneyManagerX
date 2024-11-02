@@ -1,18 +1,27 @@
+<div class="row">
+    <app-error></app-error>
+</div>
 <div class="row m-3">
     <div class="col-6">
         <h4>Monthly spendings by category</h4>
         <app-pie-spendings-per-category
             yearly="false"
-            class="pie-container"></app-pie-spendings-per-category>
+            class="pie-container"
+            (errorOccurred)="handleError($event)"
+            ></app-pie-spendings-per-category>
     </div>
     <div class="col-6">
         <h4>Yearly spendings by category</h4>
         <app-pie-spendings-per-category
             yearly="true"
-            class="pie-container"></app-pie-spendings-per-category>
+            class="pie-container"
+            (errorOccurred)="handleError($event)"
+            ></app-pie-spendings-per-category>
     </div>
 </div>
 <div class="row m-3">
     <h4>Income and expenses per month</h4>
-    <app-line-graph-yealy-incomes-expenses></app-line-graph-yealy-incomes-expenses>
+    <app-line-graph-yealy-incomes-expenses
+        (errorOccurred)="handleError($event)"
+    ></app-line-graph-yealy-incomes-expenses>
 </div>

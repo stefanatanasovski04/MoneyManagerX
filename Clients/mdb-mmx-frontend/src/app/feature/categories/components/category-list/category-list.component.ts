@@ -1,84 +1,72 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoryType } from 'src/app/shared/models/enums';
 import { ICategory } from 'src/app/shared/models/responses';
 import { CategoriesService } from '../../categories.service';
 import { CategoryAddComponent } from '../category-add/category-add.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
+import { ErrorService } from 'src/app/shared/services/error.service';
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.scss'
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
+    styleUrl: './category-list.component.scss'
 })
-export class CategoryListComponent {
+export class CategoryListComponent implements OnInit {
+    public error?: HttpErrorResponse;
+    public categories: ICategory[] = [];
+    public CategoryType = CategoryType;
 
-  constructor (
-    private categoryService: CategoriesService,
-    private modalService: MdbModalService
+    filteredCategories = [];
+    selectedCategoryType: number = 0;
+    modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
+    modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
+
+    constructor (
+        private categoryService: CategoriesService,
+        private modalService: MdbModalService,
+        private errorService: ErrorService
     ) {}
 
-  public categories: ICategory[] = [];
-  public CategoryType = CategoryType;
-  public errorMessage = '';
-  public error?: HttpErrorResponse;
-  
-  modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
-  modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
+    ngOnInit(){
+        this.getCategories();
+    }
 
-  filteredCategories = [];
-  selectedCategoryType;
-
-  ngOnInit(){
-      this.categoryService.getCategoriesList()
-      .subscribe({
-          next: data =>  {
-            this.categories = data.list;
-            this.selectedCategoryType = 0;
-            this.filterCategories();
-          },
-        error: err => {
-          this.error = err;
-          this.errorMessage = err.errorMessage;
+    filterCategories() {
+        if (Number(this.selectedCategoryType) === 2) {
+            this.filteredCategories = this.categories;
+        } else {
+            this.filteredCategories = this.categories.filter(
+                category => category.type === Number(this.selectedCategoryType)
+            );
         }
-      });
-  }
+    }
 
-  filterCategories() {
-      if (Number(this.selectedCategoryType) === 2) {
-          this.filteredCategories = this.categories;
-      } else {
-          this.filteredCategories = this.categories.filter(
-              category => category.type === Number(this.selectedCategoryType)
-          );
-      }
-  }
+    getCategories(){
+        this.categoryService.getCategoriesList().subscribe({
+            next: data =>  {
+                this.categories = data.list
+                this.filterCategories()
+            },
+            error: err => {
+                this.error = err;
+                this.errorService.showError(this.error?.error.Error || 'Failed to load Category List'); 
+            }
+        });
+    }
 
-  getCategories(){
-      this.categoryService.getCategoriesList().subscribe({
-          next: data =>  {
-            this.categories = data.list
-            this.filterCategories()
-          },
-          error: err => {
-              this.error = err;
-              this.errorMessage = err.errorMessage;
-          }
-      });
-  }
-
-  deleteCategory(id: number) {
-      this.categoryService.deleteCategory(id).subscribe({
-          next: () => {
-              this.getCategories()
-          },
-          error: err => {
-              this.error = err;
-              this.errorMessage = err.errorMessage;
-          }
-      });
-  }
+    deleteCategory(id: number) {
+        this.categoryService.deleteCategory(id).subscribe({
+            next: () => {
+                this.getCategories()
+            },
+            error: err => {
+                this.error = err;
+                this.errorService.showError(this.error?.error.Error || 'Failed to Delete Category'); 
+            }
+        });
+    }
 
     openAddModal(){
         this.modalRefAdd = this.modalService.open(CategoryAddComponent) 

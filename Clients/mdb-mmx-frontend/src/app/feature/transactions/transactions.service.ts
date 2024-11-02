@@ -4,8 +4,9 @@ import { catchError, map, throwError } from 'rxjs';
 import { IEnvelope, IListResult, ITypeResult } from 'src/app/shared/models/dtos';
 import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { ITransaction } from 'src/app/shared/models/responses';
+
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TransactionsService {
 

@@ -19,34 +19,34 @@ import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
-  declarations: [
-    NavBarComponent,
-    DatepickerComponent,
-    PeriodDropdownComponent,
-    ErrorComponent
-  ],
-  imports: [
-    CommonModule,
-    MdbCollapseModule,
-    MatDatepickerModule, 
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    ModalModule,
-    MessagesModule,
-    ButtonModule,
-    RippleModule,
-    RouterModule.forChild([])
-  ],
-  exports: [
-    NavBarComponent,
-    DatepickerComponent,
-    PeriodDropdownComponent,
-    ErrorComponent
-  ],
-  providers: [MessageService]
+    declarations: [
+        NavBarComponent,
+        DatepickerComponent,
+        PeriodDropdownComponent,
+        ErrorComponent
+    ],
+    imports: [
+        CommonModule,
+        MdbCollapseModule,
+        MatDatepickerModule, 
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        ModalModule,
+        MessagesModule,
+        ButtonModule,
+        RippleModule,
+        RouterModule.forChild([])
+    ],
+    exports: [
+        NavBarComponent,
+        DatepickerComponent,
+        PeriodDropdownComponent,
+        ErrorComponent
+    ],
+    providers: [MessageService]
 })
 export class SharedModule { }

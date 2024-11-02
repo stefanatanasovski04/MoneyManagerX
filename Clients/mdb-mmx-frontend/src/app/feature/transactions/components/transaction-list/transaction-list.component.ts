@@ -7,6 +7,7 @@ import moment from 'moment';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
+import { ErrorService } from 'src/app/shared/services/error.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -14,13 +15,7 @@ import { TransactionEditComponent } from '../transaction-edit/transaction-edit.c
   styleUrl: './transaction-list.component.scss'
 })
 export class TransactionListComponent {
-    constructor(
-        private transactionService: TransactionsService,
-        private modalService: MdbModalService
-    ){}
-
     public error?: HttpErrorResponse;
-    public errorMessage = '';
     public transactions: ITransaction[] = [];
     public TransactionType = TransactionType;
     public currentDateChosen!: string;
@@ -29,6 +24,11 @@ export class TransactionListComponent {
     modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
     modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
 
+    constructor(
+        private transactionService: TransactionsService,
+        private modalService: MdbModalService,
+        private errorService: ErrorService
+    ){}
 
     ngOnInit(): void {
         this.currentDateChosen = moment(new Date()).format('YYYY-MM-DD');
@@ -53,7 +53,7 @@ export class TransactionListComponent {
             },
             error: error => {
                 this.error = error;
-                this.errorMessage = error.errorMessage;
+                this.errorService.showError(this.error?.error.Error || 'Failed to Load Transactions'); 
             }
         })
     }
@@ -65,10 +65,11 @@ export class TransactionListComponent {
             },
             error: err => {  
                 this.error = err;
-                this.errorMessage = err.errorMessage;
+                this.errorService.showError(this.error?.error.Error || 'Failed to Delete Transaction'); 
             }
         })
     }
+    
     openEditModal(id: number){
         this.modalRefEdit = this.modalService.open(TransactionEditComponent, {
             data: {transactionId: id }

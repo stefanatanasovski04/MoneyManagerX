@@ -9,24 +9,22 @@ import { CategoryAddComponent } from './components/category-add/category-add.com
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { CategoryEditComponent } from './components/category-edit/category-edit.component';
 
-
-
 @NgModule({
-  declarations: [
-    CategoryListComponent,
-    CategoryAddComponent,
-    CategoryEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MdbFormsModule,
-    RouterModule.forChild([
-        {path:'categories', component:CategoryListComponent},
-    ])
-  ],
-  providers: [provideHttpClient()]
+    declarations: [
+        CategoryListComponent,
+        CategoryAddComponent,
+        CategoryEditComponent,
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MdbFormsModule,
+        RouterModule.forChild([
+            {path:'categories', component:CategoryListComponent},
+        ])
+    ],
+    providers: [provideHttpClient()]
 })
 export class CategoriesModule { }

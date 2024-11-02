@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { StatisticsService } from '../../statistics.service';
 import { IMonthlyIncomeExpenseDto } from 'src/app/shared/models/responses';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,15 +9,12 @@ import { HttpErrorResponse } from '@angular/common/http';
     styleUrl: './line-graph-yealy-incomes-expenses.component.scss'
 })
 export class LineGraphYealyIncomesExpensesComponent implements OnInit{
-  
-    monthlyIncomeExpensesList: IMonthlyIncomeExpenseDto[] = [];
-    public errorMessage = '';
-    public error?: HttpErrorResponse;
+    @Output() errorOccurred = new EventEmitter<HttpErrorResponse>();
 
+    monthlyIncomeExpensesList: IMonthlyIncomeExpenseDto[] = [];
     months: string[] = [];
     incomesPerMonth: number[] = [];
     expensesPerMonth: number[] = [];
-
     data: any;
     options: any;
 
@@ -36,10 +33,7 @@ export class LineGraphYealyIncomesExpensesComponent implements OnInit{
                 )
                 this.setupChart();
             },
-            error: error => {
-                this.error = error;
-                this.errorMessage = error.message;
-            }
+            error: error => this.errorOccurred.emit(error)
         })
     }
 

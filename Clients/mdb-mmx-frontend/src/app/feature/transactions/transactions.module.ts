@@ -10,24 +10,25 @@ import { TransactionAddComponent } from './components/transaction-add/transactio
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TransactionEditComponent } from './components/transaction-edit/transaction-edit.component';
+
 @NgModule({
-  declarations: [
-    TransactionListComponent, 
-    TransactionAddComponent,
-    TransactionEditComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MdbFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    RouterModule.forChild([
-        {path:'transactions', component:TransactionListComponent},
-    ])
-  ],
-  providers: [provideHttpClient()]
+    declarations: [
+        TransactionListComponent, 
+        TransactionAddComponent,
+        TransactionEditComponent
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MdbFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        RouterModule.forChild([
+            {path:'transactions', component:TransactionListComponent},
+        ])
+    ],
+    providers: [provideHttpClient()]
 })
 export class TransactionsModule { }
