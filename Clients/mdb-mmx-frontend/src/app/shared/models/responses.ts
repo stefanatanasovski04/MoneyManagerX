@@ -28,3 +28,9 @@ export interface ITotalByCategoryResponse{
     category: CategoryDto,
     total: number,
 }
+
+export interface IMonthlyIncomeExpenseDto{
+    month: string,
+    expense: number,
+    income: number,
+}

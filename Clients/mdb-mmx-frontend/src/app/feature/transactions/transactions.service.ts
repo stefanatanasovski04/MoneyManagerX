@@ -51,18 +51,4 @@ export class TransactionsService {
           );
   }
 
-  getTotalExpense(chosenDate: string, isYearly: boolean) {
-      return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/expense?date=${chosenDate}&yearly=${isYearly}`)
-          .pipe(
-              map(response => response.result.result),
-              catchError(error => throwError(error))
-          );
-  }
-  getTotalIncome(chosenDate: string, isYearly: boolean) {
-      return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/transactions/income?date=${chosenDate}&yearly=${isYearly}`)
-      .pipe(
-          map(response => response.result.result),
-          catchError(error => throwError(error))
-      );
-  }
 }

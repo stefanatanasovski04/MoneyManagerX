@@ -1,16 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { SpendingService } from 'src/app/feature/spending/spending.service';
 import { ITotalByCategoryResponse } from 'src/app/shared/models/responses';
 import { COLOR_LIST, HOVER_COLOR_LIST } from 'src/app/shared/models/static-variables';
+import { StatisticsService } from '../../statistics.service';
 
 @Component({
   selector: 'app-pie-spendings-per-category',
   templateUrl: './pie-spendings-per-category.component.html',
   styleUrl: './pie-spendings-per-category.component.scss'
 })
-export class PieSpendingsPerCategoryComponent {
-    constructor(private statisticService: SpendingService){}
+export class PieSpendingsPerCategoryComponent implements OnInit{
+    constructor(private statisticService: StatisticsService){}
     @Input() yearly: boolean;
     public errorMessage = '';
     public error?: HttpErrorResponse;

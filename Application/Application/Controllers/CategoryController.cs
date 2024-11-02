@@ -101,33 +101,6 @@
                 new UpdateCategoryCommand(id, request.Name, request.Type, request.IconFk));
         }
 
-        [SwaggerOperation(Summary = "Total by category.", Description = "Total by category.")]
-        [SwaggerResponse(StatusCodes.Status200OK, "List retrieved successfully.")]
-        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
-        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
-        [HttpGet("total-per-cateogry")]
-        public async Task<EnvelopeGeneric<List<TotalByCategoryResponse>>> GetTotalByCategory(
-            [FromQuery] DateOnly month,
-            [FromQuery] bool yearly)
-        {
-            return await queryReader.Get<GetTotalAmountPerCategoryQuery, EnvelopeGeneric<List<TotalByCategoryResponse>>>(new GetTotalAmountPerCategoryQuery(month, yearly));
-        }
-
-        [SwaggerOperation(Summary = "Transactions by category.", Description = "Transactions by category.")]
-        [SwaggerResponse(StatusCodes.Status200OK, "List retrieved successfully.")]
-        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
-        [SwaggerResponse(StatusCodes.Status403Forbidden, "Not authorized.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Some error when generating the response.")]
-        [HttpGet("{id:int}/transactions")]
-        public async Task<EnvelopeGeneric<TransactionsByCategoryResponse>> GetTransactionsByCategory(
-            [FromRoute] int id,
-            [FromQuery] DateOnly month,
-            [FromQuery] bool yearly)
-        {
-            return await queryReader.Get<GetTransactionsByCategoryQuery, EnvelopeGeneric<TransactionsByCategoryResponse>>(new GetTransactionsByCategoryQuery(id, month, yearly));
-        }
-
         [SwaggerOperation(Summary = "All Icons.", Description = "All Icons")]
         [SwaggerResponse(StatusCodes.Status200OK, "List retrieved successfully.")]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Not authenticated.")]
