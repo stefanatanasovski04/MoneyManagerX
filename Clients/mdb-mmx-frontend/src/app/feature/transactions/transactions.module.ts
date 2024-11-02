@@ -10,6 +10,7 @@ import { TransactionAddComponent } from './components/transaction-add/transactio
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TransactionEditComponent } from './components/transaction-edit/transaction-edit.component';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { TransactionEditComponent } from './components/transaction-edit/transact
         MdbFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MessagesModule,
         RouterModule.forChild([
             {path:'transactions', component:TransactionListComponent},
         ])

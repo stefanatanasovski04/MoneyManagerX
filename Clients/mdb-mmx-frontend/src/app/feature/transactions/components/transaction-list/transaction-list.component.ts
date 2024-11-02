@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { TransactionsService } from '../../transactions.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ITransaction } from 'src/app/shared/models/responses';
 import { TransactionType } from 'src/app/shared/models/enums';
 import moment from 'moment';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-transaction-list',
@@ -15,19 +14,18 @@ import { ErrorService } from 'src/app/shared/services/error.service';
   styleUrl: './transaction-list.component.scss'
 })
 export class TransactionListComponent {
-    public error?: HttpErrorResponse;
     public transactions: ITransaction[] = [];
     public TransactionType = TransactionType;
     public currentDateChosen!: string;
     public isYearly!: boolean;
+    messages: Message[] | undefined;
       
     modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
     modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
 
     constructor(
         private transactionService: TransactionsService,
-        private modalService: MdbModalService,
-        private errorService: ErrorService
+        private modalService: MdbModalService
     ){}
 
     ngOnInit(): void {
@@ -51,9 +49,8 @@ export class TransactionListComponent {
             next: response => {
                 this.transactions = response.list;
             },
-            error: error => {
-                this.error = error;
-                this.errorService.showError(this.error?.error.Error || 'Failed to Load Transactions'); 
+            error: err => {
+                this.addMessages(err?.error.Error || 'Failed to Load Transactions')
             }
         })
     }
@@ -64,8 +61,7 @@ export class TransactionListComponent {
                 this.getTransactions(this.isYearly, this.currentDateChosen)
             },
             error: err => {  
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to Delete Transaction'); 
+                this.addMessages(err?.error.Error || 'Failed to Delete Transaction')
             }
         })
     }
@@ -86,5 +82,11 @@ export class TransactionListComponent {
         this.modalRefAdd.onClose.subscribe(() => {
             this.getTransactions(this.isYearly, this.currentDateChosen)
         })
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 }

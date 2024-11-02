@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
@@ -6,7 +5,7 @@ import { CategoryType } from 'src/app/shared/models/enums';
 import { IIcon } from 'src/app/shared/models/responses';
 import { CategoriesService } from '../../categories.service';
 import { IAddCategoryRequest } from 'src/app/shared/models/requests';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-category-add',
@@ -14,16 +13,14 @@ import { ErrorService } from 'src/app/shared/services/error.service';
     styleUrl: './category-add.component.scss'
 })
 export class CategoryAddComponent implements OnInit {
-    public error?: HttpErrorResponse;
-
     pageTitle: string = 'Add Category'
     categoryForm!: FormGroup;
     icons: IIcon[] = [];
-    
+    messages: Message[] | undefined;
+
     constructor(
         public modalRef: MdbModalRef<CategoryAddComponent>,
         private categoryService: CategoriesService,
-        private errorService: ErrorService,
         private fb: FormBuilder
     ) {}
 
@@ -39,8 +36,7 @@ export class CategoryAddComponent implements OnInit {
                 this.icons = response;
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to load icons');
+                this.addMessages(err?.error.Error || 'Failed to load icons')
             }
         })
     }
@@ -57,11 +53,16 @@ export class CategoryAddComponent implements OnInit {
             this.categoryService.createCategory(request).subscribe({
                 next: () => this.onSaveComplete(),
                 error: err => {
-                    this.error = err;
-                    this.errorService.showError(this.error?.error.Error || 'Failed to create category'); 
+                    this.addMessages(err?.error.Error || 'Failed to create category')
                 }
             });
         }
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
   
     onSaveComplete(): void {
@@ -72,5 +73,4 @@ export class CategoryAddComponent implements OnInit {
     onCancel() {
         this.modalRef.close();
     }
-
 }

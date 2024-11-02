@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CategoryType } from 'src/app/shared/models/enums';
 import { ICategory } from 'src/app/shared/models/responses';
@@ -6,7 +5,7 @@ import { CategoriesService } from '../../categories.service';
 import { CategoryAddComponent } from '../category-add/category-add.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-category-list',
@@ -14,10 +13,10 @@ import { ErrorService } from 'src/app/shared/services/error.service';
     styleUrl: './category-list.component.scss'
 })
 export class CategoryListComponent implements OnInit {
-    public error?: HttpErrorResponse;
     public categories: ICategory[] = [];
     public CategoryType = CategoryType;
 
+    messages: Message[] | undefined;
     filteredCategories = [];
     selectedCategoryType: number = 0;
     modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
@@ -26,7 +25,6 @@ export class CategoryListComponent implements OnInit {
     constructor (
         private categoryService: CategoriesService,
         private modalService: MdbModalService,
-        private errorService: ErrorService
     ) {}
 
     ngOnInit(){
@@ -50,8 +48,7 @@ export class CategoryListComponent implements OnInit {
                 this.filterCategories()
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to load Category List'); 
+                this.addMessages(err?.error.Error || 'Failed to load Category List')
             }
         });
     }
@@ -62,8 +59,7 @@ export class CategoryListComponent implements OnInit {
                 this.getCategories()
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to Delete Category'); 
+                this.addMessages(err?.error.Error || 'Failed to Delete Category')
             }
         });
     }
@@ -84,5 +80,11 @@ export class CategoryListComponent implements OnInit {
         this.modalRefEdit.onClose.subscribe(() => {
             this.getCategories();
         })
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 }

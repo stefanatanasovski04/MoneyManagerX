@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CategoryType } from 'src/app/shared/models/enums';
@@ -6,7 +5,7 @@ import { ICategory, IIcon } from 'src/app/shared/models/responses';
 import { CategoriesService } from '../../categories.service';
 import { IAddCategoryRequest } from 'src/app/shared/models/requests';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-category-edit',
@@ -14,10 +13,10 @@ import { ErrorService } from 'src/app/shared/services/error.service';
     styleUrl: './category-edit.component.scss'
 })
 export class CategoryEditComponent implements OnInit {
-    public error?: HttpErrorResponse;
     public category!: ICategory | undefined;
     
     categoryId!: number;
+    messages: Message[] | undefined;
     categoryForm!: FormGroup;
     icons: IIcon[] = [];
     pageTitle: string = 'Edit Category'
@@ -25,7 +24,6 @@ export class CategoryEditComponent implements OnInit {
     constructor(
         public modalRef: MdbModalRef<CategoryEditComponent>,
         private categoryService: CategoriesService,
-        private errorService: ErrorService,
         private fb: FormBuilder
     ){}
 
@@ -43,8 +41,7 @@ export class CategoryEditComponent implements OnInit {
                 this.icons = response;
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to load Icons'); 
+                this.addMessages(err?.error.Error || 'Failed to load icons')
             } 
         })
 
@@ -54,8 +51,7 @@ export class CategoryEditComponent implements OnInit {
                 this.displayCategory()
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to load Category'); 
+                this.addMessages(err?.error.Error || 'Failed to load Category')
             }
         })
     }
@@ -84,11 +80,16 @@ export class CategoryEditComponent implements OnInit {
             this.categoryService.updateCategory(this.category!.id, request).subscribe({
                 next: () => this.onSaveComplete(),
                 error: err => {
-                    this.error = err;
-                    this.errorService.showError(this.error?.error.Error || 'Failed to edit Category'); 
+                    this.addMessages(err?.error.Error || 'Failed to edit Category')
                 }
             });
         }
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 
     onSaveComplete(): void {

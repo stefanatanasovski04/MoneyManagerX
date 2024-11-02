@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TransactionType } from 'src/app/shared/models/enums';
@@ -8,7 +7,7 @@ import { CategoriesService } from 'src/app/feature/categories/categories.service
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { Time } from '@angular/common';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-transaction-edit',
@@ -16,10 +15,10 @@ import { ErrorService } from 'src/app/shared/services/error.service';
     styleUrl: './transaction-edit.component.scss'
 })
 export class TransactionEditComponent {
-    public error?: HttpErrorResponse;
     public selectedTransacionType = 0;
     public TransactionType = TransactionType;
-    
+
+    messages: Message[] | undefined;
     pageTitle: string = 'Edit Transaction';
     transaction!: ITransaction | undefined;
     transactionForm!: FormGroup;
@@ -28,14 +27,11 @@ export class TransactionEditComponent {
     incomeCategories: ICategory[] = [];
     transactionId!: number;
 
-
-
     constructor(
         private transactionService: TransactionsService,
         private categoryService: CategoriesService,
         public modalRef: MdbModalRef<TransactionEditComponent>,
-        private fb: FormBuilder,
-        private errorService: ErrorService
+        private fb: FormBuilder
     ) { }
 
     ngOnInit(): void {
@@ -55,8 +51,7 @@ export class TransactionEditComponent {
                 this.expenseCategories = this.categories.filter(x => x.type == 0);
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to load Category List'); 
+                this.addMessages(err?.error.Error || 'Failed to load Category List')
             }
         });
 
@@ -73,8 +68,7 @@ export class TransactionEditComponent {
                 this.displayTransaction()
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to load Category List'); 
+                this.addMessages(err?.error.Error || 'Failed to load Transaction')
             }
         })
     }
@@ -108,12 +102,17 @@ export class TransactionEditComponent {
 
             this.transactionService.updateTransaction(request, this.transaction!.id).subscribe({
                 next: () => this.onSaveComplete(),
-                error: error =>{
-                    this.error = error;
-                    this.errorService.showError(this.error?.error.Error || 'Failed to Edit Transaction'); 
+                error: err =>{
+                    this.addMessages(err?.error.Error || 'Failed to Edit Transaction')
                 }
             });
         }
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 
     onSaveComplete(): void {

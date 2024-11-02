@@ -5,13 +5,13 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class ErrorService {
-    private errorSubject = new Subject<string>();
+    private errorSubject = new Subject<{ message: string}>();
     public error$ = this.errorSubject.asObservable();
 
     constructor() { }
     
     showError(message: string) {
-        this.errorSubject.next(message);
+        this.errorSubject.next({ message });
     }
 
 }

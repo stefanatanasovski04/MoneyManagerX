@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TransactionType } from 'src/app/shared/models/enums';
@@ -9,7 +8,7 @@ import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { Time } from '@angular/common';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
-import { ErrorService } from 'src/app/shared/services/error.service';
+import { Message } from 'primeng/api';
 
 @Component({
     selector: 'app-transaction-add',
@@ -18,8 +17,8 @@ import { ErrorService } from 'src/app/shared/services/error.service';
 })
 export class TransactionAddComponent {
     public selectedTransacionType = 0;
-    public error?: HttpErrorResponse;
 
+    messages: Message[] | undefined;
     pageTitle: string = 'Add Transaction';
     categories: ICategory[] = [];
     expenseCategories: ICategory[] = [];
@@ -34,7 +33,6 @@ export class TransactionAddComponent {
         private categoryService: CategoriesService,
         public modalRef: MdbModalRef<TransactionAddComponent>,
         private fb: FormBuilder,
-        private errorService: ErrorService
     ) {}
 
     ngOnInit(): void {
@@ -54,9 +52,8 @@ export class TransactionAddComponent {
                 this.expenseCategories = this.categories.filter(x => x.type == 0);
 
             },
-            error: error => {
-                this.error = error,
-                this.errorService.showError(this.error?.error.Error || 'Failed to load Category List'); 
+            error: err => {
+                this.addMessages(err?.error.Error || 'Failed to load Category List')
             }
         });
 
@@ -79,12 +76,17 @@ export class TransactionAddComponent {
 
             this.transactionService.createTransaction(request).subscribe({
                 next: () => this.onSaveComplete(),
-                error: error =>{
-                    this.error = error;
-                    this.errorService.showError(this.error?.error.Error || 'Failed to Add Transaction'); 
+                error: err =>{
+                    this.addMessages(err?.error.Error || 'Failed to Add Transaction')
                 }
             });
         }
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 
     onSaveComplete(): void {

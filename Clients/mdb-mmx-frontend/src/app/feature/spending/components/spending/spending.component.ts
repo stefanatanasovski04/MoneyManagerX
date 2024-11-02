@@ -1,11 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { Message } from 'primeng/api';
 import { switchMap } from 'rxjs';
 import { StatisticsService } from 'src/app/feature/statistics/statistics.service';
 import { TransactionAddComponent } from 'src/app/feature/transactions/components/transaction-add/transaction-add.component';
 import { ITotalByCategoryResponse } from 'src/app/shared/models/responses';
-import { ErrorService } from 'src/app/shared/services/error.service';
 
 @Component({
     selector: 'app-spending',
@@ -13,8 +12,7 @@ import { ErrorService } from 'src/app/shared/services/error.service';
     styleUrl: './spending.component.scss'
 })
 export class SpendingComponent {
-    public error?: HttpErrorResponse;
-
+    messages: Message[] | undefined;
     income!: number;
     expense!: number;
     total!: number;
@@ -24,7 +22,6 @@ export class SpendingComponent {
     constructor(
         private modalService: MdbModalService,
         private statisticsService: StatisticsService,
-        private errorService: ErrorService
     ){}
 
     ngOnInit(): void {
@@ -46,8 +43,7 @@ export class SpendingComponent {
                 this.total = this.income - this.expense;
             },
             error: err => {
-                this.error = err;
-                this.errorService.showError(this.error?.error.Error || 'Failed to retreve Income or Expense'); 
+                this.addMessages(err?.error.Error || 'Failed to retreve Income or Expense')
             }
         })
     }
@@ -64,10 +60,15 @@ export class SpendingComponent {
                 this.totalPerCategoryList = response
                 console.log(this.totalPerCategoryList)
             },
-            error: error => {
-                this.error = error;
-                this.errorService.showError(this.error?.error.Error || 'Failed to get the total per Category'); 
+            error: err => {
+                this.addMessages(err?.error.Error || 'Failed to get the total per Category')
             }
         })
+    }
+
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 }

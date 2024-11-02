@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartModule } from 'primeng/chart';
 import { PieSpendingsPerCategoryComponent } from './components/pie-spendings-per-category/pie-spendings-per-category.component';
 import { LineGraphYealyIncomesExpensesComponent } from './components/line-graph-yealy-incomes-expenses/line-graph-yealy-incomes-expenses.component';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { LineGraphYealyIncomesExpensesComponent } from './components/line-graph-
         ReactiveFormsModule,
         FormsModule,
         ChartModule,
+        MessagesModule,
         RouterModule.forChild([
             {path:'statistics', component:StatisticsMainComponent},
         ])
