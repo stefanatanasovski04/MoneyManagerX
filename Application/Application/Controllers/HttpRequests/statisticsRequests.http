@@ -1,0 +1,5 @@
+@Application_HostAddress = http://localhost:5000
+
+### Get yearly income and expense by month
+GET {{Application_HostAddress}}/api/statistics/yearly-income-expense?year=2024
+Accept: application/json
