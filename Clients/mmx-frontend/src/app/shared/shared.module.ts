@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MatSelectModule } from '@angular/material/select';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
   imports: [
     CommonModule,
     RouterModule,
+    ModalModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,

@@ -11,13 +11,19 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PeriodDropdownComponent } from './components/period-dropdown/period-dropdown.component';
 import { MatSelectModule } from '@angular/material/select';
-
+import { ErrorComponent } from './components/error/error.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { MessagesModule } from 'primeng/messages';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   declarations: [
     NavBarComponent,
     DatepickerComponent,
     PeriodDropdownComponent,
+    ErrorComponent
   ],
   imports: [
     CommonModule,
@@ -29,12 +35,18 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    ModalModule,
+    MessagesModule,
+    ButtonModule,
+    RippleModule,
     RouterModule.forChild([])
   ],
   exports: [
     NavBarComponent,
     DatepickerComponent,
-    PeriodDropdownComponent
-  ]
+    PeriodDropdownComponent,
+    ErrorComponent
+  ],
+  providers: [MessageService]
 })
 export class SharedModule { }
