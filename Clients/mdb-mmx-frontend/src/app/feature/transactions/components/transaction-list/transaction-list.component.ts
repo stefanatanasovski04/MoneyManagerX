@@ -24,7 +24,7 @@ export class TransactionListComponent {
     modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
     modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
     modalRefDelete: MdbModalRef<DeleteTransactionModalComponent> | null = null;
-
+    newDateChosen: Date = new Date();
 
     constructor(
         private transactionService: TransactionsService,
@@ -34,7 +34,7 @@ export class TransactionListComponent {
     ngOnInit(): void {
         this.currentDateChosen = moment(new Date()).format('YYYY-MM-DD');
         this.isYearly = false;
-        this.getTransactions(true, this.currentDateChosen);
+        this.getTransactions(this.isYearly, this.currentDateChosen);
     }
 
     dateHasBeenChosen($event: Date) {
