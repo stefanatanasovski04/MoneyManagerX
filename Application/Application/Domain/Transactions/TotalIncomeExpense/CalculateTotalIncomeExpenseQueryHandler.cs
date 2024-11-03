@@ -21,7 +21,7 @@
         {
             List<Transaction> transactions = query.Yearly
                 ? await dbContext.Transactions.Where(x => x.Type == query.Type && x.TransactionDate.Year == query.Month.Year).ToListAsync()
-                : await dbContext.Transactions.Where(x => x.Type == query.Type && x.TransactionDate.Month == query.Month.Month).ToListAsync();
+                : await dbContext.Transactions.Where(x => x.Type == query.Type && x.TransactionDate.Year == query.Month.Year && x.TransactionDate.Month == query.Month.Month).ToListAsync();
 
             decimal total = 0.0M;
 
