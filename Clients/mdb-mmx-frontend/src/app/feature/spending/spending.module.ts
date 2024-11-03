@@ -4,6 +4,7 @@ import { SpendingComponent } from './components/spending/spending.component';
 import { RouterModule } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { SharedModule } from "../../shared/shared.module";
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     declarations: [
@@ -12,6 +13,7 @@ import { SharedModule } from "../../shared/shared.module";
     imports: [
         CommonModule,
         SharedModule,
+        MessagesModule,
         RouterModule.forChild([
             { path: 'spending', component: SpendingComponent },
         ]),

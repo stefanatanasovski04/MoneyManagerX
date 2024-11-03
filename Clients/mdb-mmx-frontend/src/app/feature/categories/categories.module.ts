@@ -8,12 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryAddComponent } from './components/category-add/category-add.component';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { CategoryEditComponent } from './components/category-edit/category-edit.component';
+import { DeleteCategoryModalComponent } from './components/delete-category-modal/delete-category-modal.component';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
     declarations: [
         CategoryListComponent,
         CategoryAddComponent,
         CategoryEditComponent,
+        DeleteCategoryModalComponent,
     ],
     imports: [
         CommonModule,
@@ -21,6 +24,7 @@ import { CategoryEditComponent } from './components/category-edit/category-edit.
         ReactiveFormsModule,
         FormsModule,
         MdbFormsModule,
+        MessagesModule,
         RouterModule.forChild([
             {path:'categories', component:CategoryListComponent},
         ])

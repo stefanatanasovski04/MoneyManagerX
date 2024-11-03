@@ -11,12 +11,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TransactionEditComponent } from './components/transaction-edit/transaction-edit.component';
 import { MessagesModule } from 'primeng/messages';
+import { DeleteTransactionModalComponent } from './components/delete-transaction-modal/delete-transaction-modal.component';
 
 @NgModule({
     declarations: [
         TransactionListComponent, 
         TransactionAddComponent,
-        TransactionEditComponent
+        TransactionEditComponent,
+        DeleteTransactionModalComponent
     ],
     imports: [
         CommonModule,

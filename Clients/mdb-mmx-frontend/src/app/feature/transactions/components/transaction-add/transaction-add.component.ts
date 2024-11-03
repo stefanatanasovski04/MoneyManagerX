@@ -91,13 +91,13 @@ export class TransactionAddComponent {
 
     onSaveComplete(): void {
         this.transactionForm.reset();
-        this.modalRef.close()
+        this.modalRef.close(true)
         if (this.fromSpending){
             this.router.navigate(['/transactions'])
         }
     }
 
     onCancel(){
-        this.modalRef.close()
+        this.modalRef.close(false)
     }
 }

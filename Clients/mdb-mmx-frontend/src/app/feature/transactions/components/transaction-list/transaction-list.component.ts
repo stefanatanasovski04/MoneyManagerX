@@ -7,6 +7,7 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
 import { Message } from 'primeng/api';
+import { DeleteTransactionModalComponent } from '../delete-transaction-modal/delete-transaction-modal.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -18,10 +19,12 @@ export class TransactionListComponent {
     public TransactionType = TransactionType;
     public currentDateChosen!: string;
     public isYearly!: boolean;
+
     messages: Message[] | undefined;
-      
     modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
     modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
+    modalRefDelete: MdbModalRef<DeleteTransactionModalComponent> | null = null;
+
 
     constructor(
         private transactionService: TransactionsService,
@@ -65,28 +68,57 @@ export class TransactionListComponent {
             }
         })
     }
+
+    openDeleteModal(transactionId: number){
+        this.modalRefDelete = this.modalService.open(DeleteTransactionModalComponent) ;
+
+        this.modalRefDelete.onClose.subscribe((confirmed: boolean) => {
+            if (confirmed){
+                this.deleteTransaction(transactionId);
+                this.addSuccessMessages('deleted');
+            }
+        })
+    }
     
     openEditModal(id: number){
         this.modalRefEdit = this.modalService.open(TransactionEditComponent, {
             data: {transactionId: id }
         }) 
 
-        this.modalRefEdit.onClose.subscribe(() => {
+        this.modalRefEdit.onClose.subscribe((confirmed: boolean) => {
             this.getTransactions(this.isYearly, this.currentDateChosen);
+            if(confirmed){
+                this.addSuccessMessages('edited');
+            }
         })
     }
 
     openAddModal(){
         this.modalRefAdd = this.modalService.open(TransactionAddComponent) 
 
-        this.modalRefAdd.onClose.subscribe(() => {
+        this.modalRefAdd.onClose.subscribe((confirmed: boolean) => {
             this.getTransactions(this.isYearly, this.currentDateChosen)
+            if(confirmed){
+                this.addSuccessMessages('added');
+            }
         })
     }
 
     addMessages(errorMessage: string) {
+        this.messages = [];
         this.messages = [
             { severity: 'error', summary: errorMessage }
         ];
+    }
+
+    addSuccessMessages(action: string) {
+        this.messages = [];
+        this.messages = [
+            { severity: 'success', summary: 'Success', detail: `You have ${action} the transaction.` }
+        ]
+
+        setTimeout(() => {
+            this.messages = [];  // Clear the messages after 5 seconds
+        }, 3000);
     }
 }

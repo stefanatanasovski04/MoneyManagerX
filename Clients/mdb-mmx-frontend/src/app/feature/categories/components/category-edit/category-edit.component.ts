@@ -94,10 +94,10 @@ export class CategoryEditComponent implements OnInit {
 
     onSaveComplete(): void {
         this.categoryForm.reset();
-        this.modalRef.close()
+        this.modalRef.close(true)
     }
 
     onCancel(){
-        this.modalRef.close();
+        this.modalRef.close(false);
     }
 }

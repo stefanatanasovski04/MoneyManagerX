@@ -58,7 +58,6 @@ export class SpendingComponent {
         this.statisticsService.getTotalIncomePerCateogry(false).subscribe({
             next: response => {
                 this.totalPerCategoryList = response
-                console.log(this.totalPerCategoryList)
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to get the total per Category')
