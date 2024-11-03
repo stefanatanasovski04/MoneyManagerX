@@ -37,14 +37,14 @@ export class TransactionListComponent {
         this.getTransactions(this.isYearly, this.currentDateChosen);
     }
 
-    dateHasBeenChosen($event: Date) {
+    onNewDateSelected($event: Date){
         this.currentDateChosen = moment($event).format('YYYY-MM-DD');
         this.getTransactions(this.isYearly, this.currentDateChosen );
     }
 
-    onPeriodChosen($event: boolean){
-        this.isYearly = $event;
-        this.getTransactions($event, this.currentDateChosen);
+    onPeriodChosen(yearly: boolean){
+        this.isYearly = yearly;
+        this.getTransactions(this.isYearly, this.currentDateChosen)
     }
 
     getTransactions(yearly: boolean, month: string){
