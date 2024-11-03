@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-5">
     <div class="row">
         <p-messages [(value)]="messages" [enableService]="false" />
     </div>
@@ -12,42 +12,42 @@
         <div class="col-12 col-md-8"> <!-- Change to take 80% of the screen -->
             <div class="card-holder">
                 <div class="row">
-                    <div class="col-5 title-wrapper">
+                    <div class="col-5 offset-2 title-wrapper">
                         <h5 class="lbl">Income:</h5>
                     </div>
-                    <div class="col-5 title-wrapper">
-                        <h5 class="income">{{income | currency}}</h5>
+                    <div class="col-4 offset-1 title-wrapper">
+                        <h5 class="income">{{ income | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-5 title-wrapper">
+                    <div class="col-5 offset-2 title-wrapper">
                         <h5 class="lbl">Expense:</h5>
                     </div>
-                    <div class="col-5 title-wrapper">
-                        <h5 class="expense">{{expense | currency}}</h5>
+                    <div class="col-4 offset-1 title-wrapper">
+                        <h5 class="expense">{{ expense | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
                     </div>
                 </div>
 
                 <hr>
 
                 <div class="row" *ngFor="let obj of totalPerCategoryList">
-                    <div class="col-6 category-wrapper">
+                    <div class="col-4 offset-3 category-wrapper">
                         <h7>{{obj.category.name}} </h7>
                     </div>
-                    <div class="col-6 category-wrapper">
-                        <h7>{{obj.total | currency}}</h7>
+                    <div class="col-4 offset-1 category-wrapper">
+                        <h7>{{ obj.total | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h7>
                     </div>
                 </div>
 
                 <hr>
 
                 <div class="row">
-                    <div class="col-5 title-wrapper">
+                    <div class="col-5 offset-2 title-wrapper mt-3">
                         <h5 class="lbl">Balance:</h5>
                     </div>
-                    <div class="col-5 title-wrapper">
-                        <h5 class="balance">{{total | currency}}</h5>
+                    <div class="col-4 offset-1 title-wrapper">
+                        <h5 class="balance">{{ total | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
                     </div>
                 </div>
             </div>

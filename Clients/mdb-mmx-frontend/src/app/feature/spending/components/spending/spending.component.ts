@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { Message } from 'primeng/api';
