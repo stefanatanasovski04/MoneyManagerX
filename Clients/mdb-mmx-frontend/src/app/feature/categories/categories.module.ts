@@ -8,25 +8,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CategoryAddComponent } from './components/category-add/category-add.component';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { CategoryEditComponent } from './components/category-edit/category-edit.component';
-
-
+import { DeleteCategoryModalComponent } from './components/delete-category-modal/delete-category-modal.component';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
-  declarations: [
-    CategoryListComponent,
-    CategoryAddComponent,
-    CategoryEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MdbFormsModule,
-    RouterModule.forChild([
-        {path:'categories', component:CategoryListComponent},
-    ])
-  ],
-  providers: [provideHttpClient()]
+    declarations: [
+        CategoryListComponent,
+        CategoryAddComponent,
+        CategoryEditComponent,
+        DeleteCategoryModalComponent,
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MdbFormsModule,
+        MessagesModule,
+        RouterModule.forChild([
+            {path:'categories', component:CategoryListComponent},
+        ])
+    ],
+    providers: [provideHttpClient()]
 })
 export class CategoriesModule { }

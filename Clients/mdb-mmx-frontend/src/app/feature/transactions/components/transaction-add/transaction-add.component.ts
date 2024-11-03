@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TransactionType } from 'src/app/shared/models/enums';
@@ -9,31 +8,31 @@ import { IAddTransactionRequest } from 'src/app/shared/models/requests';
 import { Time } from '@angular/common';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { Router } from '@angular/router';
+import { Message } from 'primeng/api';
 
 @Component({
-  selector: 'app-transaction-add',
-  templateUrl: './transaction-add.component.html',
-  styleUrl: './transaction-add.component.scss'
+    selector: 'app-transaction-add',
+    templateUrl: './transaction-add.component.html',
+    styleUrl: './transaction-add.component.scss'
 })
 export class TransactionAddComponent {
+    public selectedTransacionType = 0;
+
+    messages: Message[] | undefined;
     pageTitle: string = 'Add Transaction';
     categories: ICategory[] = [];
     expenseCategories: ICategory[] = [];
     incomeCategories: ICategory[] = [];
-    public selectedTransacionType = 0;
     transactionForm!: FormGroup;
     TransactionType = TransactionType;
     fromSpending: boolean = false;
-
-    public error?: HttpErrorResponse;
-    public errorMessage = '';
 
     constructor(
         private transactionService: TransactionsService,
         private router: Router,
         private categoryService: CategoriesService,
         public modalRef: MdbModalRef<TransactionAddComponent>,
-        private fb: FormBuilder
+        private fb: FormBuilder,
     ) {}
 
     ngOnInit(): void {
@@ -53,17 +52,13 @@ export class TransactionAddComponent {
                 this.expenseCategories = this.categories.filter(x => x.type == 0);
 
             },
-            error: error => {
-                this.error = error,
-                this.errorMessage = error.errorMessage
+            error: err => {
+                this.addMessages(err?.error.Error || 'Failed to load Category List')
             }
         });
 
-        console.log(this.expenseCategories);
-
         this.transactionForm.get('transactionType')?.valueChanges.subscribe({
             next: (type) =>{
-                console.log(type);
                 this.selectedTransacionType = Number(type);
             }
         });
@@ -81,25 +76,28 @@ export class TransactionAddComponent {
 
             this.transactionService.createTransaction(request).subscribe({
                 next: () => this.onSaveComplete(),
-                error: error =>{
-                    this.error = error;
-                    this.errorMessage = error.errorMessage;
+                error: err =>{
+                    this.addMessages(err?.error.Error || 'Failed to Add Transaction')
                 }
             });
         }
     }
 
-    onCancel(){
-        this.modalRef.close()
+    addMessages(errorMessage: string) {
+        this.messages = [
+            { severity: 'error', summary: errorMessage }
+        ];
     }
 
     onSaveComplete(): void {
         this.transactionForm.reset();
-        this.modalRef.close()
-        console.log(`From Spending:`);
-        console.log(this.fromSpending);
+        this.modalRef.close(true)
         if (this.fromSpending){
             this.router.navigate(['/transactions'])
         }
+    }
+
+    onCancel(){
+        this.modalRef.close(false)
     }
 }

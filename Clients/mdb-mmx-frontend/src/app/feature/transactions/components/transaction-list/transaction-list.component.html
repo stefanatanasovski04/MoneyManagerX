@@ -1,4 +1,7 @@
 <div class="row">
+    <p-messages [(value)]="messages" [enableService]="false" />
+</div>
+<div class="row">
     <div class="col-5">
         <app-datepicker (dateChosen)="dateHasBeenChosen($event)"></app-datepicker>
         <app-period-dropdown (periodChosen)="onPeriodChosen($event)"></app-period-dropdown>
@@ -54,7 +57,7 @@
                       Edit
                   </button>
   
-                  <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="deleteTransaction(transaction.id)">
+                  <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="openDeleteModal(transaction.id)">
                       Delete
                   </button>
               </div>

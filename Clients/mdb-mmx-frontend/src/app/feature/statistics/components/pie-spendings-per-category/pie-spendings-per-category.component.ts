@@ -1,29 +1,28 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ITotalByCategoryResponse } from 'src/app/shared/models/responses';
 import { COLOR_LIST, HOVER_COLOR_LIST } from 'src/app/shared/models/static-variables';
 import { StatisticsService } from '../../statistics.service';
 
 @Component({
-  selector: 'app-pie-spendings-per-category',
-  templateUrl: './pie-spendings-per-category.component.html',
-  styleUrl: './pie-spendings-per-category.component.scss'
+    selector: 'app-pie-spendings-per-category',
+    templateUrl: './pie-spendings-per-category.component.html',
+    styleUrl: './pie-spendings-per-category.component.scss'
 })
 export class PieSpendingsPerCategoryComponent implements OnInit{
-    constructor(private statisticService: StatisticsService){}
+    @Output() errorOccurred = new EventEmitter<HttpErrorResponse>();
     @Input() yearly: boolean;
-    public errorMessage = '';
-    public error?: HttpErrorResponse;
+
     totalPerCategoryList!: ITotalByCategoryResponse[];
     chartLabels: string[] = [];
     chartAmounts: number[] = [];
-
     data: any;
     options: any;
 
+    constructor(private statisticService: StatisticsService){}
+
     ngOnInit() {
         this.getTotalByCategory();
-        console.log(this.data);
     }
 
     getTotalByCategory(){
@@ -36,10 +35,7 @@ export class PieSpendingsPerCategoryComponent implements OnInit{
                 });
                 this.setupChart();
             },
-            error: error => {
-                this.error = error;
-                this.errorMessage = error.message;
-          }
+            error: error => this.errorOccurred.emit(error)
         })
     }
 
@@ -59,8 +55,8 @@ export class PieSpendingsPerCategoryComponent implements OnInit{
         };
 
         this.options = {
-          responsive: true,
-          maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     labels: {

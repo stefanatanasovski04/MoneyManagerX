@@ -11,30 +11,39 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PeriodDropdownComponent } from './components/period-dropdown/period-dropdown.component';
 import { MatSelectModule } from '@angular/material/select';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { MessagesModule } from 'primeng/messages';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
-  declarations: [
-    NavBarComponent,
-    DatepickerComponent,
-    PeriodDropdownComponent,
-  ],
-  imports: [
-    CommonModule,
-    MdbCollapseModule,
-    MatDatepickerModule, 
-    MatFormFieldModule,
-    MatNativeDateModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    RouterModule.forChild([])
-  ],
-  exports: [
-    NavBarComponent,
-    DatepickerComponent,
-    PeriodDropdownComponent
-  ]
+    declarations: [
+        NavBarComponent,
+        DatepickerComponent,
+        PeriodDropdownComponent,
+    ],
+    imports: [
+        CommonModule,
+        MdbCollapseModule,
+        MatDatepickerModule, 
+        MatFormFieldModule,
+        MatNativeDateModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        ModalModule,
+        MessagesModule,
+        ButtonModule,
+        RippleModule,
+        RouterModule.forChild([])
+    ],
+    exports: [
+        NavBarComponent,
+        DatepickerComponent,
+        PeriodDropdownComponent,
+    ],
+    providers: [MessageService]
 })
 export class SharedModule { }

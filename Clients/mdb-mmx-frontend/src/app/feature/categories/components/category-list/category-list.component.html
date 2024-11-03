@@ -1,4 +1,6 @@
-
+<div class="row">
+    <p-messages [(value)]="messages" [enableService]="false" />
+</div>
 <div class="row" style="align-items: top;">
   <div class="mb-3 col-5">
     <label for="categoryTypeSelect" class="form-label">Filter by Category Type:</label>
@@ -40,7 +42,7 @@
                     Edit
                 </button>
 
-                <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="deleteCategory(cateogry.id)">
+                <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="openDeleteModal(cateogry.id)">
                     Delete
                 </button>
             </div>

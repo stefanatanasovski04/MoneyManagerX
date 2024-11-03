@@ -5,7 +5,7 @@ import { IEnvelope, ITypeResult } from 'src/app/shared/models/dtos';
 import { IMonthlyIncomeExpenseDto, ITotalByCategoryResponse } from 'src/app/shared/models/responses';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StatisticsService {
     private baseUrl = 'http://localhost:5000/api';
@@ -14,18 +14,18 @@ export class StatisticsService {
 
     getTotalIncomePerCateogry(isYearly: boolean, currentMonth = new Date().toISOString().split('T')[0]) {
         return this.http.get<IEnvelope<ITotalByCategoryResponse[]>>(`${this.baseUrl}/statistics/total-per-cateogry?month=${currentMonth}&yearly=${isYearly}`)
-        .pipe(
-            map(response => response.result),
-            catchError(error => throwError(error))
-        );
+            .pipe(
+                map(response => response.result),
+                catchError(error => throwError(error))
+            );
     }
 
     getYearlyIncomesAndExpensesPerMonth(year: number = new Date().getFullYear()) {
         return this.http.get<IEnvelope<IMonthlyIncomeExpenseDto[]>>(`${this.baseUrl}/statistics/yearly-income-expense?year=${year}`)
-        .pipe(
-            map(response => response.result),
-            catchError(error => throwError(error))
-        );
+            .pipe(
+                map(response => response.result),
+                catchError(error => throwError(error))
+            );
     }
     
     getTotalExpense(chosenDate: string, isYearly: boolean) {
@@ -38,9 +38,9 @@ export class StatisticsService {
 
     getTotalIncome(chosenDate: string, isYearly: boolean) {
         return this.http.get<IEnvelope<ITypeResult<number>>>(`${this.baseUrl}/statistics/income?date=${chosenDate}&yearly=${isYearly}`)
-        .pipe(
-            map(response => response.result.result),
-            catchError(error => throwError(error))
-        );
+            .pipe(
+                map(response => response.result.result),
+                catchError(error => throwError(error))
+            );
     }
 }
