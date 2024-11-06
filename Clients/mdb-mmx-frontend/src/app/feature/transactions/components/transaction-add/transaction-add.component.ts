@@ -45,6 +45,14 @@ export class TransactionAddComponent {
             name:""
         })
 
+        this.transactionForm.patchValue({
+            TransactionType: TransactionType.Income,
+            transactionDate: new Date().toLocaleDateString('en-CA'),
+            transactionTime: new Date().toLocaleTimeString('en-GB', { hour12: false })
+        });
+
+        console.log(this.transactionForm.value)
+
         this.categoryService.getCategoriesList().subscribe({
             next: response => {
                 this.categories = response.list; 
@@ -63,6 +71,7 @@ export class TransactionAddComponent {
             }
         });
     }
+
     saveTransaction(){
         if(this.transactionForm.valid){
             let request: IAddTransactionRequest = {
