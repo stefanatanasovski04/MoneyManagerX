@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TransactionEditComponent } from './components/transaction-edit/transaction-edit.component';
 import { MessagesModule } from 'primeng/messages';
 import { DeleteTransactionModalComponent } from './components/delete-transaction-modal/delete-transaction-modal.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { DeleteTransactionModalComponent } from './components/delete-transaction
         MatFormFieldModule,
         MatInputModule,
         MessagesModule,
+        CalendarModule,
         RouterModule.forChild([
             {path:'transactions', component:TransactionListComponent},
         ])

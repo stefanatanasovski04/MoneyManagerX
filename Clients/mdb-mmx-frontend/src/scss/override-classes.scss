@@ -1,0 +1,40 @@
+.p-calendar{
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+.p-inputtext.p-component{
+    text-align: center;
+}
+.p-element, .calendar-height{
+    border: none;
+    width: 100%;
+    height: 80%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.p-datepicker-group-container{
+    height: 50%;
+    width: 80%;
+}
+.footer{
+    margin-top: 100px;
+}
+/* Colors for income, expense, and balance */
+.income {
+    color: #5e916a; /* Green for income */
+    font-weight: bold;
+}
+
+.expense {
+    color: #dc3545; /* Red for expense */
+    font-weight: bold;
+}
+.progress--mdb-progress-bg{
+    background-color: #dc3545;
+}
+// .labelForm{
+//     margin-right: 20px;
+// }

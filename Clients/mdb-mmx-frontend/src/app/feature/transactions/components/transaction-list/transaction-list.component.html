@@ -1,67 +1,115 @@
 <div class="row">
     <p-messages [(value)]="messages" [enableService]="false" />
 </div>
-<div class="row">
-    <div class="col-5">
-        <app-datepicker (dateChosen)="dateHasBeenChosen($event)"></app-datepicker>
-        <app-period-dropdown (periodChosen)="onPeriodChosen($event)"></app-period-dropdown>
+<div class="row mb-3 align-items-end">
+    <div class="col-md-4 mb-2 d-flex flex-column">
+        <label for="monthPicker" class="form-label mb-1">Month</label>
+        <p-calendar 
+            id="monthPicker"
+            [(ngModel)]="newDateChosen" 
+            view="month" 
+            dateFormat="MM yy" 
+            [readonlyInput]="true" 
+            (onSelect)="onNewDateSelected($event)"
+            class="form-control calendar-height" />
     </div>
-    <div class="col-5">
-      <button class="btn btn-primary" (click)="openAddModal()">Add Transaction</button>
+    <div class="col-md-4 mb-2 d-flex flex-column">
+        <label for="period" class="form-label mb-1">Period</label>
+        <div id="period" class="btn-group button-group-height" role="group">
+            <button type="button" class="btn btn-secondary" data-mdb-ripple-init (click)="onPeriodChosen(false)">Monthly</button>
+            <button type="button" class="btn btn-secondary" data-mdb-ripple-init (click)="onPeriodChosen(true)">Yearly</button>
+        </div>
+    </div>
+    <div class="col-md-4 mb-2 d-flex justify-content-end">
+        <button class="btn btn-primary d-flex w-100 button-group-height align-items-center justify-content-center" (click)="openAddModal()">
+            <i class="fas fa-plus me-2"></i> 
+            Add Transaction
+        </button>
+    </div>
+</div>
+
+<div class="col-8 offset-2 mb-2">
+    <div class="progress" style="height:30px">
+      <div class="progress-bar bg-success" role="progressbar" style="border: 2px solid rgb(2, 143, 9); border-radius: 10px;" [style.width]="progressLeftPercentage" aria-valuenow="progressLeftPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{progressLeftPercentage}}</strong></div>
+      <div class="progress-bar bg-danger" role="progressbar"  style="border: 2px solid rgb(134, 3, 3); border-radius: 10px;" [style.width]="progressRightPercentage" aria-valuenow="progressRightPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{progressRightPercentage}}</strong></div>
     </div>
 </div>
 
 <table class="table align-middle mb-0 bg-white">
-      <tbody>
-      <tr *ngFor="let transaction of transactions">
-          <td>
-            <div class="d-flex align-items-center">
-              <img
-                  [src]="transaction.category.photoUrl"
-                  alt="..."
-                  style="width: 70; height: 70px"
-                  />
-            </div>
-          </td>
-          <td>
-              <div *ngIf="transaction.name.length" class="ms-5">
-                  <h5 class="fw-bold mb-1">{{transaction.name}} </h5>
-              </div>
-              <div *ngIf="!transaction.name.length" class="ms-5">
-                <h5 class="fw-bold mb-1">{{transaction.category.name}} </h5>
-            </div>
-          </td>
-          <td>
-            <div class="ms-5">
-                <h5 class="fw-bold mb-1">{{transaction.amount}}ден </h5>
-            </div>
-          </td>
-          <td>
-            <div class="ms-5">
-                <h5 class="fw-bold mb-1">{{transaction.transactionDate | date}} </h5>
-            </div>
-          </td>
-          <td>
-            <div class="ms-5">
-                <h5 class="fw-bold mb-1">{{transaction.transactionTime}} </h5>
-            </div>
-          </td>
-
-          <td>
-            <h5><span *ngIf="transaction.type === TransactionType.Income" class="badge badge-success rounded-pill d-inline">Income</span></h5>
-            <h5><span *ngIf="transaction.type === TransactionType.Expense" class="badge badge-danger rounded-pill d-inline">Expense</span></h5>
-          </td>
-          <td>
-              <div>
-                  <button type="button" class="btn btn-primary btn-sm btn-rounded" (click)="openEditModal(transaction.id)">
-                      Edit
-                  </button>
-  
-                  <button type="button" class="btn btn-danger btn-sm btn-rounded" (click)="openDeleteModal(transaction.id)">
-                      Delete
-                  </button>
-              </div>
-         </td>
+    <thead class="table-header">
+        <tr>
+            <th class="text-center" style="width: 100px;"></th>
+            <th class="text-center"></th>
+            <th class="text-center">Amount</th>
+            <th class="text-center">Type</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Time</th>
+            <th class="text-center"></th>
         </tr>
-      </tbody>
-    </table>
+    </thead>
+    <tbody>
+        <tr *ngFor="let transaction of transactions">
+            <!-- Image Column -->
+            <td class="px-4" style="width: 100px;">
+                <div class="d-flex align-items-center">
+                    <img
+                        [src]="transaction.category.photoUrl"
+                        alt="Transaction Category"
+                        class="rounded-circle"
+                        style="width: 60px; height: 60px;"
+                    />
+                </div>
+            </td>
+
+            <!-- Transaction Name or Category Name Column -->
+            <td class="text-center">
+                <h5 class="mb-1">{{ transaction.name || transaction.category.name }}</h5>
+            </td>
+
+            <!-- Amount Column -->
+            <td class="text-center">
+              <h5 *ngIf="transaction.type === TransactionType.Income" style="color: #5e916a;">{{ transaction.amount | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
+              <h5 *ngIf="transaction.type === TransactionType.Expense" style="color: #dc3545;">{{ transaction.amount | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
+            </td>
+
+            <!-- Transaction Type Badge Column -->
+            <td class="text-center">
+              <h5>
+                <span *ngIf="transaction.type === TransactionType.Income" class="badge bg-success rounded-pill">Income</span>
+                <span *ngIf="transaction.type === TransactionType.Expense" class="badge bg-danger rounded-pill">Expense</span>
+              </h5>
+            </td>
+
+            <!-- Transaction Date Column -->
+            <td class="text-center">
+              <h5 class="mb-1">{{ transaction.transactionDate | date: 'mediumDate' }}</h5>
+            </td>
+
+            <!-- Transaction Time Column -->
+            <td class="text-center">
+              <h5 class="mb-1">{{ transaction.transactionTime.slice(0, 5)}}h</h5>
+            </td>
+
+            <!-- Action Buttons Column -->
+            <td class="text-center">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm rounded-pill"
+                  data-mdb-ripple-init
+                  data-mdb-ripple-color="dark"
+                  (click)="openEditModal(transaction.id)"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm btn-floating"
+                  data-mdb-ripple-init
+                  (click)="openDeleteModal(transaction.id)"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

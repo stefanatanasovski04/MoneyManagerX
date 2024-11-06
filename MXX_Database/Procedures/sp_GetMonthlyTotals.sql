@@ -11,6 +11,7 @@ BEGIN
     FROM [dbo].[tblTransaction]
     WHERE YEAR(TransactionDate) = @Year
       AND Type IN (0, 1)
+      AND DeletedOn IS NULL
     GROUP BY 
         MONTH(TransactionDate)
     ORDER BY 
