@@ -25,6 +25,8 @@ export class TransactionListComponent {
     modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
     modalRefDelete: MdbModalRef<DeleteTransactionModalComponent> | null = null;
     newDateChosen: Date = new Date();
+    progressLeftPercentage: string = 60+'%';
+    progressRightPercentage: string = 40+'%';
 
     constructor(
         private transactionService: TransactionsService,

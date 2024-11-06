@@ -19,7 +19,7 @@ export class CategoryListComponent implements OnInit {
 
     messages: Message[] | undefined;
     filteredCategories = [];
-    selectedCategoryType: number = 0;
+    selectedCategoryType: number = 2;
     modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
     modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
     modalRefDelete: MdbModalRef<DeleteCategoryModalComponent> | null = null;
