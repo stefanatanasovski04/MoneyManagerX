@@ -1,22 +1,31 @@
 ﻿USE [MMX_Database]
 
 INSERT INTO tblIcon ([CreatedOn], [photoUrl]) VALUES
-(GETDATE(), 'assets/icons/icons8-bill-96.png'),
-(GETDATE(), 'assets/icons/icons8-bread-96.png'),
-(GETDATE(), 'assets/icons/icons8-candy-96.png'),
-(GETDATE(), 'assets/icons/icons8-cutlery-96.png'),
-(GETDATE(), 'assets/icons/icons8-garage-96.png'),
-(GETDATE(), 'assets/icons/icons8-grapes-96.png'),
-(GETDATE(), 'assets/icons/icons8-office-chair-96.png'),
-(GETDATE(), 'assets/icons/icons8-office-phone-96.png'),
-(GETDATE(), 'assets/icons/icons8-soccer-ball-96.png'),
-(GETDATE(), 'assets/icons/icons8-swimming-96.png'),
-(GETDATE(), 'assets/icons/icons8-hamburger-96.png');
-
-INSERT INTO [dbo].tblCategory([CreatedOn], [IconFk], [Name], [Type]) VALUES
-(GETDATE(), 1, 'Sports', 0),
-(GETDATE(), 2, 'Salary', 1);
-
-INSERT INTO [dbo].tblTransaction([CreatedOn], [CategoryFk], [Name], [Type], [Amount], [TransactionDate], [TransactionTime]) VALUES
-(GETDATE(), 1, 'Football', 0, 700, GETDATE(), GETDATE()),
-(GETDATE(), 2, 'January Sallary', 1, 5000, GETDATE(), GETDATE());
+(GETDATE(), 'assets/icons/money/money-bag.png'),
+(GETDATE(), 'assets/icons/money/money(1).png'),
+(GETDATE(), 'assets/icons/money/give-money.png'),
+(GETDATE(), 'assets/icons/money/piggy-bank.png'),
+(GETDATE(), 'assets/icons/money/profits.png'),
+(GETDATE(), 'assets/icons/money/save-money.png'),
+(GETDATE(), 'assets/icons/food/pizza.png'),
+(GETDATE(), 'assets/icons/food/fast-food.png'),
+(GETDATE(), 'assets/icons/food/burger.png'),
+(GETDATE(), 'assets/icons/food/beer-mug.png'),
+(GETDATE(), 'assets/icons/food/coffee-cup.png'),
+(GETDATE(), 'assets/icons/food/tray.png'),
+(GETDATE(), 'assets/icons/transport/train.png'),
+(GETDATE(), 'assets/icons/transport/car.png'),
+(GETDATE(), 'assets/icons/transport/bus-stop.png'),
+(GETDATE(), 'assets/icons/household/home.png'),
+(GETDATE(), 'assets/icons/household/home2.png'),
+(GETDATE(), 'assets/icons/household/rent.png'),
+(GETDATE(), 'assets/icons/household/sale.png'),
+(GETDATE(), 'assets/icons/entertainment/ball.png'),
+(GETDATE(), 'assets/icons/entertainment/diamonds.png'),
+(GETDATE(), 'assets/icons/entertainment/football.png'),
+(GETDATE(), 'assets/icons/entertainment/gamepad.png'),
+(GETDATE(), 'assets/icons/entertainment/mortarboard.png'),
+(GETDATE(), 'assets/icons/health/hospital.png'),
+(GETDATE(), 'assets/icons/health/pill.png'),
+(GETDATE(), 'assets/icons/health/heart.png'),
+(GETDATE(), 'assets/icons/health/pharmacy.png');

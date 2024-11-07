@@ -29,9 +29,9 @@
 </div>
 
 <div class="col-8 offset-2 mb-2">
-    <div class="progress" style="height:30px">
-      <div class="progress-bar bg-success" role="progressbar" style="border: 2px solid rgb(2, 143, 9); border-radius: 10px;" [style.width]="progressLeftPercentage" aria-valuenow="progressLeftPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{progressLeftPercentage}}</strong></div>
-      <div class="progress-bar bg-danger" role="progressbar"  style="border: 2px solid rgb(134, 3, 3); border-radius: 10px;" [style.width]="progressRightPercentage" aria-valuenow="progressRightPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{progressRightPercentage}}</strong></div>
+    <div class="progress" style="height:30px; background: #fff;" >
+      <div class="progress-bar bg-success" role="progressbar" style="border: 2px solid rgb(2, 143, 9); border-radius: 10px;" [style.width]="progressLeftPercentage" aria-valuenow="progressLeftPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{totalIncome | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>
+      <div class="progress-bar bg-danger" role="progressbar"  style="border: 2px solid rgb(134, 3, 3); border-radius: 10px;" [style.width]="progressRightPercentage" aria-valuenow="progressRightPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{totalExpense | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>
     </div>
 </div>
 
@@ -55,8 +55,6 @@
                     <img
                         [src]="transaction.category.photoUrl"
                         alt="Transaction Category"
-                        class="rounded-circle"
-                        style="width: 60px; height: 60px;"
                     />
                 </div>
             </td>

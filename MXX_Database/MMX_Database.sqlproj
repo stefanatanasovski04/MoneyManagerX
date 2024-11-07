@@ -67,6 +67,6 @@
     <Build Include="Procedures\sp_GetMonthlyTotals.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Seeds\PopuleteDatabase.Seeds.sql" />
+    <PostDeploy Include="Seeds\PopuleteDatabase.Seeds.sql" />
   </ItemGroup>
 </Project>
