@@ -8,6 +8,8 @@ import { TransactionAddComponent } from '../transaction-add/transaction-add.comp
 import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
 import { Message } from 'primeng/api';
 import { DeleteTransactionModalComponent } from '../delete-transaction-modal/delete-transaction-modal.component';
+import { StatisticsService } from 'src/app/feature/statistics/statistics.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-list',
@@ -26,20 +28,22 @@ export class TransactionListComponent {
     modalRefDelete: MdbModalRef<DeleteTransactionModalComponent> | null = null;
     newDateChosen: Date = new Date();
 
-    progressLeftPercentage: string = 56.46+'%';
-    progressRightPercentage: string = 43.54+'%';
+    progressLeftPercentage: string;
+    progressRightPercentage: string;
     totalIncome: number = 53000;
     totalExpense: number = 40860;
 
     constructor(
         private transactionService: TransactionsService,
-        private modalService: MdbModalService
+        private modalService: MdbModalService,
+        private statisticsService: StatisticsService
     ){}
 
     ngOnInit(): void {
         this.currentDateChosen = moment(new Date()).format('YYYY-MM-DD');
         this.isYearly = false;
         this.getTransactions(this.isYearly, this.currentDateChosen);
+        // this.setProgressBar();
     }
 
     onNewDateSelected($event: Date){
@@ -59,6 +63,9 @@ export class TransactionListComponent {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to Load Transactions')
+            },
+            complete: () => {
+                this.setProgressBar()
             }
         })
     }
@@ -72,6 +79,36 @@ export class TransactionListComponent {
                 this.addMessages(err?.error.Error || 'Failed to Delete Transaction')
             }
         })
+    }
+
+    setProgressBar(){
+        this.statisticsService.getTotalIncome(this.currentDateChosen, this.isYearly).pipe(
+            switchMap(response => {
+                this.totalIncome = response;
+                return this.statisticsService.getTotalExpense(this.currentDateChosen, this.isYearly);
+            })
+        ).subscribe({
+            next: (response) => {
+                this.totalExpense = response
+                this.calculatePercentageForProgressBar()
+            },
+            error: err => {
+                this.addMessages(err?.error.Error || 'Failed to retreve Income or Expense');
+            }
+        })
+    }
+
+    calculatePercentageForProgressBar(){
+        let total = this.totalIncome + this.totalExpense;
+        
+        if (total === 0){
+            this.progressLeftPercentage = this.progressRightPercentage = 50+'%';
+        }else{
+            let incomePercentage = (this.totalIncome / total) * 100;
+            let expensePercentage = 100 - incomePercentage;
+            this.progressLeftPercentage = incomePercentage+'%';
+            this.progressRightPercentage = expensePercentage+'%';
+        }
     }
 
     openDeleteModal(transactionId: number){
