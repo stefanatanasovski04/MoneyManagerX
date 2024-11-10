@@ -35,8 +35,8 @@
 <ng-container *ngIf="!showSpinner">
     <div class="col-8 offset-2 mb-2">
         <div class="progress" style="height:30px; background: #fff;" >
-          <div class="progress-bar bg-success" role="progressbar" style="border: 2px solid rgb(2, 143, 9); border-radius: 10px;" [style.width]="progressLeftPercentage" aria-valuenow="progressLeftPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{totalIncome | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>
-          <div class="progress-bar bg-danger" role="progressbar"  style="border: 2px solid rgb(134, 3, 3); border-radius: 10px;" [style.width]="progressRightPercentage" aria-valuenow="progressRightPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{totalExpense | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>
+          <div mdbTooltip="{{tooltipLeftPercentage}}" placement="left" class="progress-bar bg-success" role="progressbar" style="border: 2px solid rgb(2, 143, 9); border-radius: 10px; display: inline-block;" [style.width]="progressLeftPercentage" aria-valuenow="progressLeftPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large; display: inline-block;">{{totalIncome | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>
+          <div mdbTooltip="{{tooltipRightPercentage}}" placement="right" class="progress-bar bg-danger" role="progressbar"  style="border: 2px solid rgb(134, 3, 3); border-radius: 10px;" [style.width]="progressRightPercentage" aria-valuenow="progressRightPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large;">{{totalExpense | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>
         </div>
     </div>
 
@@ -52,6 +52,11 @@
               <th class="text-center"></th>
           </tr>
       </thead>
+      <div *ngIf="showTableSpinner" class="text-center mt-2">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
       <tbody *ngIf="!showTableSpinner">
           <tr *ngFor="let transaction of transactions">
               <!-- Image Column -->

@@ -31,6 +31,8 @@ export class TransactionListComponent {
     showTableSpinner: boolean = false;
     progressLeftPercentage: string;
     progressRightPercentage: string;
+    tooltipLeftPercentage: string;
+    tooltipRightPercentage: string;
     totalIncome: number = 53000;
     totalExpense: number = 40860;
 
@@ -48,12 +50,12 @@ export class TransactionListComponent {
 
     onNewDateSelected($event: Date){
         this.currentDateChosen = moment($event).format('YYYY-MM-DD');
-        this.getTransactions(this.isYearly, this.currentDateChosen, true);
+        this.getTransactions(this.isYearly, this.currentDateChosen, false);
     }
 
     onPeriodChosen(yearly: boolean){
         this.isYearly = yearly;
-        this.getTransactions(this.isYearly, this.currentDateChosen, true)
+        this.getTransactions(this.isYearly, this.currentDateChosen, false)
     }
 
     getTransactions(yearly: boolean, month: string, spin: boolean){
@@ -62,14 +64,16 @@ export class TransactionListComponent {
         this.transactionService.getTransactionsList(yearly, month).subscribe({
             next: response => {
                 this.transactions = response.list;
+                this.closeSpinner();
+                this.closeTableSpinner();
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to Load Transactions')
+                this.closeSpinner();
+                this.closeTableSpinner();
             },
             complete: () => {
                 this.setProgressBar()
-                this.closeSpinner();
-                this.closeTableSpinner();
             }
         })
     }
@@ -110,6 +114,17 @@ export class TransactionListComponent {
         }else{
             let incomePercentage = (this.totalIncome / total) * 100;
             let expensePercentage = 100 - incomePercentage;
+            this.tooltipLeftPercentage = incomePercentage.toFixed(2) +'%';
+            this.tooltipRightPercentage = expensePercentage.toFixed(2) +'%';
+
+            if(expensePercentage < 20){
+                expensePercentage = 20;
+                incomePercentage = 80;
+            }
+            if(incomePercentage < 20){
+                expensePercentage = 80;
+                incomePercentage = 20;
+            }
             this.progressLeftPercentage = incomePercentage+'%';
             this.progressRightPercentage = expensePercentage+'%';
         }

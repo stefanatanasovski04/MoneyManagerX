@@ -5,7 +5,7 @@
 <div class="row mb-3 align-items-end">
     <div class="col-6 mb-2 d-flex flex-column">
         <label for="categoryTypeSelect" class="form-label mb-1">Filter by Category Type:</label>
-        <select id="categoryTypeSelect" class="form-select" [(ngModel)]="selectedCategoryType" (change)="filterCategories()">
+        <select id="categoryTypeSelect" class="form-select" [(ngModel)]="selectedCategoryType" (change)="filterCategories(true)">
           <option value="0" selected>Expense</option>
           <option value="1">Income</option>
           <option value="2">----------</option>
@@ -35,6 +35,11 @@
                 <th class="text-center"></th>
             </tr>
         </thead>
+        <div *ngIf="showTableSpinner" class="text-center mt-2">
+          <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <tbody *ngIf="!showTableSpinner">
             <tr *ngFor="let category of filteredCategories">
                 <!-- Image Column -->

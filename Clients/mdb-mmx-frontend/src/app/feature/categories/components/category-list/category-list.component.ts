@@ -35,7 +35,10 @@ export class CategoryListComponent implements OnInit {
         this.getCategories(true);
     }
 
-    filterCategories() {
+    filterCategories(spin: boolean) {
+        if(spin){
+            this.showTableSpinner = true;
+        }
         if (Number(this.selectedCategoryType) === 2) {
             this.filteredCategories = this.categories;
         } else {
@@ -43,6 +46,7 @@ export class CategoryListComponent implements OnInit {
                 category => category.type === Number(this.selectedCategoryType)
             );
         }
+        this.closeTableSpinner();
     }
 
     getCategories(spin: boolean){
@@ -50,16 +54,16 @@ export class CategoryListComponent implements OnInit {
         this.showTableSpinner = !spin;
         this.categoryService.getCategoriesList().subscribe({
             next: data =>  {
-                this.categories = data.list
-                this.filterCategories()
-            },
-            error: err => {
-                this.addMessages(err?.error.Error || 'Failed to load Category List')
-            },
-            complete: () => {
+                this.categories = data.list;
+                this.filterCategories(spin);
                 this.closeSpinner();
                 this.closeTableSpinner();
-            }
+            },
+            error: err => {
+                this.addMessages(err?.error.Error || 'Failed to load Category List');
+                this.closeSpinner();
+                this.closeTableSpinner();
+            },
         });
     }
 
@@ -130,6 +134,6 @@ export class CategoryListComponent implements OnInit {
     }
     
     closeTableSpinner(){
-        setTimeout(() => this.showTableSpinner = false, 100)
+        setTimeout(() => this.showTableSpinner = false, 300)
     }
 }
