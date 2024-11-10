@@ -32,7 +32,7 @@
       <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<ng-container *ngIf="!showSpinner">
+<ng-container *ngIf="!showSpinner" class="mb-5">
     <div class="col-8 offset-2 mb-2">
         <div class="progress" style="height:30px; background: #fff;" >
           <div mdbTooltip="{{tooltipLeftPercentage}}" placement="left" class="progress-bar bg-success" role="progressbar" style="border: 2px solid rgb(2, 143, 9); border-radius: 10px; display: inline-block;" [style.width]="progressLeftPercentage" aria-valuenow="progressLeftPercentage" aria-valuemin="0" aria-valuemax="100"><strong style="font-size: large; display: inline-block;">{{totalIncome | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</strong></div>

@@ -17,13 +17,15 @@ import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 import { ReplaceCommaWithSpacePipe } from './pipes/replace-comma-with-space.pipe';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
         NavBarComponent,
         DatepickerComponent,
         PeriodDropdownComponent,
-        ReplaceCommaWithSpacePipe
+        ReplaceCommaWithSpacePipe,
+        FooterComponent
     ],
     imports: [
         CommonModule,
@@ -46,7 +48,8 @@ import { ReplaceCommaWithSpacePipe } from './pipes/replace-comma-with-space.pipe
         NavBarComponent,
         DatepickerComponent,
         PeriodDropdownComponent,
-        ReplaceCommaWithSpacePipe
+        ReplaceCommaWithSpacePipe,
+        FooterComponent
     ],
     providers: [MessageService]
 })

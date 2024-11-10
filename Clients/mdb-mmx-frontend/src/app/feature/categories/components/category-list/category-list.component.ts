@@ -19,7 +19,7 @@ export class CategoryListComponent implements OnInit {
 
     messages: Message[] | undefined;
     filteredCategories = [];
-    selectedCategoryType: number = 2;
+    selectedCategoryType: number = 0;
     showSpinner: boolean = false;
     showTableSpinner: boolean = false;
     modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
@@ -55,7 +55,7 @@ export class CategoryListComponent implements OnInit {
         this.categoryService.getCategoriesList().subscribe({
             next: data =>  {
                 this.categories = data.list;
-                this.filterCategories(spin);
+                this.filterCategories(!spin);
                 this.closeSpinner();
                 this.closeTableSpinner();
             },
