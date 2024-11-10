@@ -27,7 +27,8 @@ export class TransactionListComponent {
     modalRefEdit: MdbModalRef<TransactionEditComponent> | null = null;
     modalRefDelete: MdbModalRef<DeleteTransactionModalComponent> | null = null;
     newDateChosen: Date = new Date();
-
+    showSpinner: boolean = false;
+    showTableSpinner: boolean = false;
     progressLeftPercentage: string;
     progressRightPercentage: string;
     totalIncome: number = 53000;
@@ -42,21 +43,22 @@ export class TransactionListComponent {
     ngOnInit(): void {
         this.currentDateChosen = moment(new Date()).format('YYYY-MM-DD');
         this.isYearly = false;
-        this.getTransactions(this.isYearly, this.currentDateChosen);
-        // this.setProgressBar();
+        this.getTransactions(this.isYearly, this.currentDateChosen, true)
     }
 
     onNewDateSelected($event: Date){
         this.currentDateChosen = moment($event).format('YYYY-MM-DD');
-        this.getTransactions(this.isYearly, this.currentDateChosen );
+        this.getTransactions(this.isYearly, this.currentDateChosen, true);
     }
 
     onPeriodChosen(yearly: boolean){
         this.isYearly = yearly;
-        this.getTransactions(this.isYearly, this.currentDateChosen)
+        this.getTransactions(this.isYearly, this.currentDateChosen, true)
     }
 
-    getTransactions(yearly: boolean, month: string){
+    getTransactions(yearly: boolean, month: string, spin: boolean){
+        this.showSpinner = spin;
+        this.showTableSpinner = !spin;
         this.transactionService.getTransactionsList(yearly, month).subscribe({
             next: response => {
                 this.transactions = response.list;
@@ -66,6 +68,8 @@ export class TransactionListComponent {
             },
             complete: () => {
                 this.setProgressBar()
+                this.closeSpinner();
+                this.closeTableSpinner();
             }
         })
     }
@@ -73,7 +77,7 @@ export class TransactionListComponent {
     deleteTransaction(transactionId: number){
         this.transactionService.deleteTransaction(transactionId).subscribe({
             next: () => {
-                this.getTransactions(this.isYearly, this.currentDateChosen)
+                this.getTransactions(this.isYearly, this.currentDateChosen, false)
             },
             error: err => {  
                 this.addMessages(err?.error.Error || 'Failed to Delete Transaction')
@@ -128,7 +132,7 @@ export class TransactionListComponent {
         }) 
 
         this.modalRefEdit.onClose.subscribe((confirmed: boolean) => {
-            this.getTransactions(this.isYearly, this.currentDateChosen);
+            this.getTransactions(this.isYearly, this.currentDateChosen, false);
             if(confirmed){
                 this.addSuccessMessages('edited');
             }
@@ -139,7 +143,7 @@ export class TransactionListComponent {
         this.modalRefAdd = this.modalService.open(TransactionAddComponent) 
 
         this.modalRefAdd.onClose.subscribe((confirmed: boolean) => {
-            this.getTransactions(this.isYearly, this.currentDateChosen)
+            this.getTransactions(this.isYearly, this.currentDateChosen, false)
             if(confirmed){
                 this.addSuccessMessages('added');
             }
@@ -162,5 +166,13 @@ export class TransactionListComponent {
         setTimeout(() => {
             this.messages = [];  // Clear the messages after 5 seconds
         }, 3000);
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 50)
+    }
+
+    closeTableSpinner(){
+        setTimeout(() => this.showTableSpinner = false, 200)
     }
 }

@@ -1,18 +1,21 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
-import { ErrorService } from 'src/app/shared/services/error.service';
 
 @Component({
     selector: 'app-statistics-main',
     templateUrl: './statistics-main.component.html',
     styleUrl: './statistics-main.component.scss'
 })
-export class StatisticsMainComponent {
+export class StatisticsMainComponent implements OnInit{
     messages: Message[] | undefined;
+    showSpinner: boolean = true;
 
-    constructor(private errorService: ErrorService) {}
+    constructor() {}
 
+    ngOnInit(): void {
+        setTimeout(() => {this.showSpinner = false;}, 50)
+    }
     addMessages(errorMessage: string) {
         this.messages = [
             { severity: 'error', summary: errorMessage }

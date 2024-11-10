@@ -19,6 +19,7 @@ export class SpendingComponent {
     total!: number;
     totalPerCategoryList!: ITotalByCategoryResponse[];
     modalRefAdd: MdbModalRef<TransactionAddComponent> | null = null;
+    showSpinner: boolean = false;
 
     constructor(
         private modalService: MdbModalService,
@@ -31,6 +32,7 @@ export class SpendingComponent {
     }
 
     updateValues(){
+        this.showSpinner = true;
         let isYearly = false;
         let currentMonth = new Date().toISOString().split('T')[0];
         this.statisticsService.getTotalIncome(currentMonth, isYearly).pipe(
@@ -42,9 +44,11 @@ export class SpendingComponent {
             next: (response) => {
                 this.expense = response
                 this.total = this.income - this.expense;
+                this.closeSpinner();
             },
             error: err => {
-                this.addMessages(err?.error.Error || 'Failed to retreve Income or Expense')
+                this.addMessages(err?.error.Error || 'Failed to retreve Income or Expense');
+                this.closeSpinner();
             }
         })
     }
@@ -56,12 +60,15 @@ export class SpendingComponent {
     }
 
     getTotalByCategory(){
+        this.showSpinner = true;
         this.statisticsService.getTotalIncomePerCateogry(false).subscribe({
             next: response => {
-                this.totalPerCategoryList = response
+                this.totalPerCategoryList = response;
+                this.closeSpinner();
             },
             error: err => {
-                this.addMessages(err?.error.Error || 'Failed to get the total per Category')
+                this.addMessages(err?.error.Error || 'Failed to get the total per Category');
+                this.closeSpinner();
             }
         })
     }
@@ -70,5 +77,11 @@ export class SpendingComponent {
         this.messages = [
             { severity: 'error', summary: errorMessage }
         ];
+    }
+
+    closeSpinner(){
+        setTimeout(() => {
+            this.showSpinner = false;
+        }, 50)
     }
 }

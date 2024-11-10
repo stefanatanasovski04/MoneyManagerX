@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
-import { RouterModule } from '@angular/router';
+import { RouterLinkActive, RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -39,6 +39,7 @@ import { ReplaceCommaWithSpacePipe } from './pipes/replace-comma-with-space.pipe
         MessagesModule,
         ButtonModule,
         RippleModule,
+        RouterLinkActive,
         RouterModule.forChild([])
     ],
     exports: [

@@ -6,8 +6,12 @@
 <div class="heading-wrapper col-12 mt-2">
     <h2 class="heading-text">Your Spendings</h2>
 </div>
-
-<div class="container">
+<div *ngIf="showSpinner" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<div class="container" *ngIf="!showSpinner">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8"> <!-- Change to take 80% of the screen -->
             <div class="card-holder">
@@ -16,7 +20,7 @@
                         <h5 class="lbl">Income:</h5>
                     </div>
                     <div class="col-4 offset-1 title-wrapper">
-                        <h5 class="income">{{ income | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
+                        <h5 class="income">{{ income | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
                     </div>
                 </div>
 
@@ -25,7 +29,7 @@
                         <h5 class="lbl">Expense:</h5>
                     </div>
                     <div class="col-4 offset-1 title-wrapper">
-                        <h5 class="expense">{{ expense | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
+                        <h5 class="expense">{{ expense | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
                     </div>
                 </div>
 
@@ -36,7 +40,7 @@
                         <h7>{{obj.category.name}} </h7>
                     </div>
                     <div class="col-4 offset-1 category-wrapper">
-                        <h7>{{ obj.total | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h7>
+                        <h7>{{ obj.total | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h7>
                     </div>
                 </div>
 
@@ -47,7 +51,7 @@
                         <h5 class="lbl">Balance:</h5>
                     </div>
                     <div class="col-4 offset-1 title-wrapper">
-                        <h5 class="balance">{{ total | currency: 'ден ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
+                        <h5 class="balance">{{ total | currency: '$ ':'symbol':'0.0-0' | replaceCommaWithSpace }}</h5>
                     </div>
                 </div>
             </div>

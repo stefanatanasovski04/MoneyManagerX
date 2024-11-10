@@ -20,6 +20,8 @@ export class CategoryListComponent implements OnInit {
     messages: Message[] | undefined;
     filteredCategories = [];
     selectedCategoryType: number = 2;
+    showSpinner: boolean = false;
+    showTableSpinner: boolean = false;
     modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
     modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
     modalRefDelete: MdbModalRef<DeleteCategoryModalComponent> | null = null;
@@ -30,7 +32,7 @@ export class CategoryListComponent implements OnInit {
     ) {}
 
     ngOnInit(){
-        this.getCategories();
+        this.getCategories(true);
     }
 
     filterCategories() {
@@ -43,7 +45,9 @@ export class CategoryListComponent implements OnInit {
         }
     }
 
-    getCategories(){
+    getCategories(spin: boolean){
+        this.showSpinner = spin;
+        this.showTableSpinner = !spin;
         this.categoryService.getCategoriesList().subscribe({
             next: data =>  {
                 this.categories = data.list
@@ -51,6 +55,10 @@ export class CategoryListComponent implements OnInit {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to load Category List')
+            },
+            complete: () => {
+                this.closeSpinner();
+                this.closeTableSpinner();
             }
         });
     }
@@ -58,7 +66,7 @@ export class CategoryListComponent implements OnInit {
     deleteCategory(id: number) {
         this.categoryService.deleteCategory(id).subscribe({
             next: () => {
-                this.getCategories()
+                this.getCategories(false);
                 this.addSuccessMessages('deleted');
             },
             error: err => {
@@ -71,7 +79,7 @@ export class CategoryListComponent implements OnInit {
         this.modalRefAdd = this.modalService.open(CategoryAddComponent) 
 
         this.modalRefAdd.onClose.subscribe((confirmed: boolean) => {
-            this.getCategories();
+            this.getCategories(false);
             if (confirmed){
                 this.addSuccessMessages('added');
             }
@@ -94,7 +102,7 @@ export class CategoryListComponent implements OnInit {
         }) 
 
         this.modalRefEdit.onClose.subscribe((confirmed: boolean) => {
-            this.getCategories();
+            this.getCategories(false);
             if(confirmed){
                 this.addSuccessMessages('edited');
             }
@@ -115,5 +123,13 @@ export class CategoryListComponent implements OnInit {
         setTimeout(() => {
             this.messages = [];  // Clear the messages after 5 seconds
         }, 3000);
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 50)
+    }
+    
+    closeTableSpinner(){
+        setTimeout(() => this.showTableSpinner = false, 100)
     }
 }
