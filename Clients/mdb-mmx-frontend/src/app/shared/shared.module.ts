@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
-import { RouterModule } from '@angular/router';
+import { RouterLinkActive, RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -17,13 +17,15 @@ import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 import { ReplaceCommaWithSpacePipe } from './pipes/replace-comma-with-space.pipe';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
         NavBarComponent,
         DatepickerComponent,
         PeriodDropdownComponent,
-        ReplaceCommaWithSpacePipe
+        ReplaceCommaWithSpacePipe,
+        FooterComponent
     ],
     imports: [
         CommonModule,
@@ -39,13 +41,15 @@ import { ReplaceCommaWithSpacePipe } from './pipes/replace-comma-with-space.pipe
         MessagesModule,
         ButtonModule,
         RippleModule,
+        RouterLinkActive,
         RouterModule.forChild([])
     ],
     exports: [
         NavBarComponent,
         DatepickerComponent,
         PeriodDropdownComponent,
-        ReplaceCommaWithSpacePipe
+        ReplaceCommaWithSpacePipe,
+        FooterComponent
     ],
     providers: [MessageService]
 })

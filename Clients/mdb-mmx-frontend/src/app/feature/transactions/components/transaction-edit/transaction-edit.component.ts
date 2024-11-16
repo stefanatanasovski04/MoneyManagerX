@@ -26,6 +26,7 @@ export class TransactionEditComponent {
     expenseCategories: ICategory[] = [];
     incomeCategories: ICategory[] = [];
     transactionId!: number;
+    showSpinner: boolean = false;
 
     constructor(
         private transactionService: TransactionsService,
@@ -35,6 +36,7 @@ export class TransactionEditComponent {
     ) { }
 
     ngOnInit(): void {
+        this.showSpinner = true;
         this.transactionForm = this.fb.group({
                 transactionType: TransactionType.Expense,
                 transactionDate: "",
@@ -52,7 +54,8 @@ export class TransactionEditComponent {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to load Category List')
-            }
+            },
+            complete: () => this.closeSpinner()
         });
 
         this.transactionForm.get('transactionType')?.valueChanges.subscribe({
@@ -69,7 +72,8 @@ export class TransactionEditComponent {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to load Transaction')
-            }
+            },
+            complete: () => this.closeSpinner()
         })
     }
 
@@ -122,5 +126,9 @@ export class TransactionEditComponent {
 
     onCancel() {
         this.modalRef.close(false);
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 300)
     }
 }

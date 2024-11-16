@@ -13,6 +13,7 @@ import { TransactionEditComponent } from './components/transaction-edit/transact
 import { MessagesModule } from 'primeng/messages';
 import { DeleteTransactionModalComponent } from './components/delete-transaction-modal/delete-transaction-modal.component';
 import { CalendarModule } from 'primeng/calendar';
+import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { CalendarModule } from 'primeng/calendar';
         MatInputModule,
         MessagesModule,
         CalendarModule,
+        MdbTooltipModule,
         RouterModule.forChild([
             {path:'transactions', component:TransactionListComponent},
         ])

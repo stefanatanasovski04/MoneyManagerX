@@ -19,7 +19,9 @@ export class CategoryListComponent implements OnInit {
 
     messages: Message[] | undefined;
     filteredCategories = [];
-    selectedCategoryType: number = 2;
+    selectedCategoryType: number = 0;
+    showSpinner: boolean = false;
+    showTableSpinner: boolean = false;
     modalRefAdd: MdbModalRef<CategoryAddComponent> | null = null;
     modalRefEdit: MdbModalRef<CategoryEditComponent> | null = null;
     modalRefDelete: MdbModalRef<DeleteCategoryModalComponent> | null = null;
@@ -30,10 +32,13 @@ export class CategoryListComponent implements OnInit {
     ) {}
 
     ngOnInit(){
-        this.getCategories();
+        this.getCategories(true);
     }
 
-    filterCategories() {
+    filterCategories(spin: boolean) {
+        if(spin){
+            this.showTableSpinner = true;
+        }
         if (Number(this.selectedCategoryType) === 2) {
             this.filteredCategories = this.categories;
         } else {
@@ -41,24 +46,31 @@ export class CategoryListComponent implements OnInit {
                 category => category.type === Number(this.selectedCategoryType)
             );
         }
+        this.closeTableSpinner();
     }
 
-    getCategories(){
+    getCategories(spin: boolean){
+        this.showSpinner = spin;
+        this.showTableSpinner = !spin;
         this.categoryService.getCategoriesList().subscribe({
             next: data =>  {
-                this.categories = data.list
-                this.filterCategories()
+                this.categories = data.list;
+                this.filterCategories(!spin);
+                this.closeSpinner();
+                this.closeTableSpinner();
             },
             error: err => {
-                this.addMessages(err?.error.Error || 'Failed to load Category List')
-            }
+                this.addMessages(err?.error.Error || 'Failed to load Category List');
+                this.closeSpinner();
+                this.closeTableSpinner();
+            },
         });
     }
 
     deleteCategory(id: number) {
         this.categoryService.deleteCategory(id).subscribe({
             next: () => {
-                this.getCategories()
+                this.getCategories(false);
                 this.addSuccessMessages('deleted');
             },
             error: err => {
@@ -71,7 +83,7 @@ export class CategoryListComponent implements OnInit {
         this.modalRefAdd = this.modalService.open(CategoryAddComponent) 
 
         this.modalRefAdd.onClose.subscribe((confirmed: boolean) => {
-            this.getCategories();
+            this.getCategories(false);
             if (confirmed){
                 this.addSuccessMessages('added');
             }
@@ -94,7 +106,7 @@ export class CategoryListComponent implements OnInit {
         }) 
 
         this.modalRefEdit.onClose.subscribe((confirmed: boolean) => {
-            this.getCategories();
+            this.getCategories(false);
             if(confirmed){
                 this.addSuccessMessages('edited');
             }
@@ -115,5 +127,13 @@ export class CategoryListComponent implements OnInit {
         setTimeout(() => {
             this.messages = [];  // Clear the messages after 5 seconds
         }, 3000);
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 50)
+    }
+    
+    closeTableSpinner(){
+        setTimeout(() => this.showTableSpinner = false, 300)
     }
 }

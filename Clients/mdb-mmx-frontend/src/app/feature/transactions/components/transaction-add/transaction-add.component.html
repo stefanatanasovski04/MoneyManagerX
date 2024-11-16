@@ -6,9 +6,13 @@
         <!-- Pills content -->
         <div class="tab-content">
             <div class="tab-pane fade active show" id="pills-register" role="tabpanel" aria-labelledby="mdb-tab-register">
-
-                <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction()">
                 <h5 class="modal-title" id="exampleModalLabel">{{pageTitle}}</h5>
+                <div *ngIf="showSpinner" class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction()" *ngIf="!showSpinner">
                 <hr>          
                 <!-- Transaction Type -->
                 <div class="form-outline mb-4">
@@ -73,7 +77,7 @@
 
                 <!-- Amount input -->
                 <mdb-form-control class="mb-4">
-                    <input mdbInput formControlName="transactionAmount" type="number" id="transactionAmount" class="form-control" />
+                    <input mdbInput formControlName="transactionAmount" type="text" id="transactionAmount" class="form-control" />
                     <label mdbLabel class="form-label" for="transactionAmount">Amount</label>
                 </mdb-form-control>
 

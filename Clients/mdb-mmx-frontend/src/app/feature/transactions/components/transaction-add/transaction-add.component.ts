@@ -26,6 +26,7 @@ export class TransactionAddComponent {
     transactionForm!: FormGroup;
     TransactionType = TransactionType;
     fromSpending: boolean = false;
+    showSpinner: boolean = false;
 
     constructor(
         private transactionService: TransactionsService,
@@ -36,6 +37,7 @@ export class TransactionAddComponent {
     ) {}
 
     ngOnInit(): void {
+        this.showSpinner = true;
         this.transactionForm = this.fb.group({
             transactionType: 0,
             transactionDate: "",
@@ -62,7 +64,8 @@ export class TransactionAddComponent {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to load Category List')
-            }
+            },
+            complete: () => this.closeSpinner()
         });
 
         this.transactionForm.get('transactionType')?.valueChanges.subscribe({
@@ -108,5 +111,9 @@ export class TransactionAddComponent {
 
     onCancel(){
         this.modalRef.close(false)
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 300)
     }
 }

@@ -3,27 +3,35 @@
         <p-messages [(value)]="messages" [enableService]="false" />
     </div>
 </div>
-<div class="row m-3">
-    <div class="col-6">
-        <h4>Monthly spendings by category</h4>
-        <app-pie-spendings-per-category
-            yearly="false"
-            class="pie-container"
-            (errorOccurred)="handleError($event)"
-            ></app-pie-spendings-per-category>
-    </div>
-    <div class="col-6">
-        <h4>Yearly spendings by category</h4>
-        <app-pie-spendings-per-category
-            yearly="true"
-            class="pie-container"
-            (errorOccurred)="handleError($event)"
-            ></app-pie-spendings-per-category>
+<div *ngIf="showSpinner" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
 </div>
-<div class="row m-3">
-    <h4>Income and expenses per month</h4>
-    <app-line-graph-yealy-incomes-expenses
-        (errorOccurred)="handleError($event)"
-    ></app-line-graph-yealy-incomes-expenses>
-</div>
+<ng-container *ngIf="!showSpinner">
+    <div class="row m-3">
+        <div class="col-6">
+            <h4>Monthly spendings by category</h4>
+            <app-pie-spendings-per-category
+                yearly="false"
+                class="pie-container"
+                (errorOccurred)="handleError($event)"
+                ></app-pie-spendings-per-category>
+        </div>
+        <div class="col-6">
+            <h4>Yearly spendings by category</h4>
+            <app-pie-spendings-per-category
+                yearly="true"
+                class="pie-container"
+                (errorOccurred)="handleError($event)"
+                ></app-pie-spendings-per-category>
+        </div>
+    </div>
+    <div class="row m-3">
+        <h4>Income and expenses per month</h4>
+        <app-line-graph-yealy-incomes-expenses
+            (errorOccurred)="handleError($event)"
+        ></app-line-graph-yealy-incomes-expenses>
+    </div>
+</ng-container>
+

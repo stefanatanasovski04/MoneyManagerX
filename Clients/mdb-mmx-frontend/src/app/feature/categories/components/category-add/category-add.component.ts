@@ -17,6 +17,7 @@ export class CategoryAddComponent implements OnInit {
     categoryForm!: FormGroup;
     icons: IIcon[] = [];
     messages: Message[] | undefined;
+    showSpinner: boolean = true;
 
     constructor(
         public modalRef: MdbModalRef<CategoryAddComponent>,
@@ -37,7 +38,8 @@ export class CategoryAddComponent implements OnInit {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to load icons')
-            }
+            },
+            complete: () => this.closeSpinner()
         })
     }
   
@@ -72,5 +74,9 @@ export class CategoryAddComponent implements OnInit {
 
     onCancel() {
         this.modalRef.close(false);
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 300)
     }
 }

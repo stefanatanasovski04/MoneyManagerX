@@ -20,6 +20,7 @@ export class CategoryEditComponent implements OnInit {
     categoryForm!: FormGroup;
     icons: IIcon[] = [];
     pageTitle: string = 'Edit Category'
+    showSpinner: boolean = false;
   
     constructor(
         public modalRef: MdbModalRef<CategoryEditComponent>,
@@ -30,6 +31,7 @@ export class CategoryEditComponent implements OnInit {
 
 
     ngOnInit(): void {
+        this.showSpinner = true;
         this.categoryForm = this.fb.group({
             categoryName: '',
             categoryType: 0,
@@ -42,7 +44,8 @@ export class CategoryEditComponent implements OnInit {
             },
             error: err => {
                 this.addMessages(err?.error.Error || 'Failed to load icons')
-            } 
+            },
+            complete: () => this.closeSpinner()
         })
 
         this.categoryService.getCategoryById(this.categoryId).subscribe({
@@ -99,5 +102,9 @@ export class CategoryEditComponent implements OnInit {
 
     onCancel(){
         this.modalRef.close(false);
+    }
+
+    closeSpinner(){
+        setTimeout(() => this.showSpinner = false, 300)
     }
 }
